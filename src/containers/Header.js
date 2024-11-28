@@ -55,7 +55,7 @@ function Header(){
                     <h1 className="text-2xl font-semibold ml-2">{pageTitle}</h1>
                 </div>
 
-                
+           
 
             <div className="flex-none ">
 
@@ -69,7 +69,10 @@ function Header(){
                     <option value="corporate">Corporate</option>
                     <option value="retro">Retro</option>
                 </select> */}
-
+            {/* Notification icon */}
+            <button class="btn btn-sm btn-primary mx-7" >                  
+                    <span className="text-bold">POS</span>
+                </button>
 
             {/* Light and dark theme selection toogle **/}
             <label className="swap ">
@@ -83,7 +86,7 @@ function Header(){
                 <button className="btn btn-ghost ml-4  btn-circle" onClick={() => openNotification()}>
                     <div className="indicator">
                         <BellIcon className="h-6 w-6"/>
-                        {noOfNotifications > 0 ? <span className="indicator-item badge badge-secondary badge-sm">{noOfNotifications}</span> : null }
+                        {noOfNotifications > 0 ? <span className="indicator-item badge badge-primary badge-sm">{noOfNotifications}</span> : null }
                     </div>
                 </button>
 
@@ -92,20 +95,42 @@ function Header(){
                 <div className="dropdown dropdown-end ml-4">
                     <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                         <div className="w-10 rounded-full">
-                        <img src="https://placeimg.com/80/80/people" alt="profile" />
+                        <img src="/Profile.svg" />
+                        {/* <img src="https://placeimg.com/80/80/people" alt="profile" /> */}
                         </div>
                     </label>
-                    <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-                        <li className="justify-between">
-                        <Link to={'/app/settings-profile'}>
-                            Profile Settings
-                            <span className="badge">New</span>
-                            </Link>
-                        </li>
-                        <li className=''><Link to={'/app/settings-billing'}>Bill History</Link></li>
-                        <div className="divider mt-0 mb-0"></div>
-                        <li><a onClick={logoutUser}>Logout</a></li>
-                    </ul>
+                    <ul
+            tabIndex={0}
+            className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+        >
+            {/* Profile Settings */}
+            <li className="justify-between">
+                <Link to="/app/settings-profile">
+                    Profile Settings
+                    <span className="badge">New</span>
+                </Link>
+            </li>
+
+            {/* Divider */}
+            <div className="divider mt-0 mb-0"></div>
+
+            {/* Login */}
+            <li>
+                <Link to="/login">
+                    Login
+                </Link>
+            </li>
+
+            {/* Divider */}
+            <div className="divider mt-0 mb-0"></div>
+
+            {/* Logout */}
+            <li>
+                <a onClick={logoutUser} role="button" className="cursor-pointer">
+                    Logout
+                </a>
+            </li>
+        </ul>
                 </div>
             </div>
             </div>
