@@ -17,6 +17,16 @@ const ProfileSettings = lazy(() => import('../pages/protected/ProfileSettings'))
 const GettingStarted = lazy(() => import('../pages/GettingStarted'))
 const DocFeatures = lazy(() => import('../pages/DocFeatures'))
 const DocComponents = lazy(() => import('../pages/DocComponents'))
+const SalesReport = lazy(() => import('../pages/protected/SalesReport'))
+const ProductReport = lazy(() => import('../pages/protected/ProductReport'))
+const PSalesReport = lazy(() => import('../pages/protected/PSalesReport'))
+const PurchaseReport = lazy(() => import('../pages/protected/PurchaseReport'))
+const StockReport = lazy(() => import('../pages/protected/StockReport'))
+const SupplierReport = lazy(() => import('../pages/protected/SupplierReport'))
+const QtyAlert = lazy(() => import('../pages/protected/QtyAlert'))
+const CustomerReport = lazy(() => import('../pages/protected/CustomerReport'))
+const BestCustomer = lazy(() => import('../pages/protected/BestCustomer'))
+const TopSell = lazy(() => import('../pages/protected/TopSell'))
 
 
 const routes = [
@@ -79,6 +89,46 @@ const routes = [
   {
     path: '/blank',
     component: Blank,
+  },
+  {
+    path: '/SalesReport',
+    component: SalesReport,
+  },
+  {
+    path: '/ProductReport',
+    component: ProductReport,
+  },
+  {
+    path: '/PSalesReport',
+    component: PSalesReport,
+  },
+  {
+    path: '/PurchaseReport',
+    component: PurchaseReport,
+  },
+  {
+    path: '/StockReport',
+    component: StockReport,
+  },
+  {
+    path: '/SupplierReport',
+    component: SupplierReport,
+  },
+  {
+    path: '/QtyAlert',
+    component: QtyAlert,
+  },
+  {
+    path: '/CustomerReport',
+    component: CustomerReport,
+  },
+  {
+    path: '/BestCustomer',
+    component: BestCustomer,
+  },
+  {
+    path: '/TopSell',
+    component: TopSell,
   },
 ]
 

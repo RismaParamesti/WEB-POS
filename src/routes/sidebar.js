@@ -191,6 +191,10 @@ const routes = [
         name: 'Supplier Report',
       },
       {
+        path: '/app/QtyAlert',
+        name: 'Product Quantity Alert',
+      },
+      {
         path: '/app/CustomerReport',
         name: 'Customer Report',
       },
