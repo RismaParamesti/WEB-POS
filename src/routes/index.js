@@ -16,6 +16,17 @@ import AllTransfer from "../features/warehouse/allTransfer";
 import DetailTransfer from "../features/warehouse/detailTransfer";
 import EditTransfer from "../features/warehouse/editTransfer";
 
+const SalesReport = lazy(() => import('../pages/protected/SalesReport'))
+const ProductReport = lazy(() => import('../pages/protected/ProductReport'))
+const PSalesReport = lazy(() => import('../pages/protected/PSalesReport'))
+const PurchaseReport = lazy(() => import('../pages/protected/PurchaseReport'))
+const StockReport = lazy(() => import('../pages/protected/StockReport'))
+const SupplierReport = lazy(() => import('../pages/protected/SupplierReport'))
+const QtyAlert = lazy(() => import('../pages/protected/QtyAlert'))
+const CustomerReport = lazy(() => import('../pages/protected/CustomerReport'))
+const BestCustomer = lazy(() => import('../pages/protected/BestCustomer'))
+const TopSell = lazy(() => import('../pages/protected/TopSell'))
+
 const Dashboard = lazy(() => import("../pages/protected/Dashboard"));
 const Welcome = lazy(() => import("../pages/protected/Welcome"));
 const Page404 = lazy(() => import("../pages/protected/404"));
@@ -98,6 +109,46 @@ const routes = [
   {
     path: "/warehouse-editTransfer",
     component: EditTransfer,
+  },
+  {
+    path: '/SalesReport',
+    component: SalesReport,
+  },
+  {
+    path: '/ProductReport',
+    component: ProductReport,
+  },
+  {
+    path: '/PSalesReport',
+    component: PSalesReport,
+  },
+  {
+    path: '/PurchaseReport',
+    component: PurchaseReport,
+  },
+  {
+    path: '/StockReport',
+    component: StockReport,
+  },
+  {
+    path: '/SupplierReport',
+    component: SupplierReport,
+  },
+  {
+    path: '/QtyAlert',
+    component: QtyAlert,
+  },
+  {
+    path: '/CustomerReport',
+    component: CustomerReport,
+  },
+  {
+    path: '/BestCustomer',
+    component: BestCustomer,
+  },
+  {
+    path: '/TopSell',
+    component: TopSell,
   },
   {
     path: "/settings-team",
