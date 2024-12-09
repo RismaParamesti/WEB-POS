@@ -8,7 +8,7 @@ import {
 import Search from "./component/Search";
 import PDF from "./component/PDF";
 import PageControl from "../../../../components/PageControl/PageControl";
-import SupplierStats from "./component/suppplierStats";
+import SupplierStats from "./component/supplierStats";
 
 function ReportPageSupplier() {
   const [activeTab, setActiveTab] = useState("Sales"); // State untuk tab aktif
