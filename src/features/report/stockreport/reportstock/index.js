@@ -411,23 +411,23 @@ const ReportPageStock = () => {
         {/* Tabel Warehouse */}
         <div className="w-full sm:w-auto overflow-x-auto">
           <table className="table-auto border border-primary rounded-lg text-sm sm:text-base w-full sm:w-auto">
-            <thead className="bg-gray-300">
+            <thead className="bg-[#D9D9D9]">
               <tr>
-                <th className="py-2 sm:py-4 px-3 sm:px-6 text-left font-semibold text-gray-900">
+                <th className="py-2 sm:py-4 px-3 sm:px-6 text-left font-semibold text-neutral">
                   Warehouse
                 </th>
-                <th className="py-2 sm:py-4 px-3 sm:px-6 text-left font-semibold text-gray-900">
+                <th className="py-2 sm:py-4 px-3 sm:px-6 text-left font-semibold text-neutral">
                   Quantity
                 </th>
               </tr>
             </thead>
             <tbody>
               {warehouseData.map((item, index) => (
-                <tr key={index} className="hover:bg-gray-100">
-                  <td className="py-2 sm:py-4 px-3 sm:px-6 text-gray-800">
+                <tr key={index} className="bg-base-100">
+                  <td className="py-2 sm:py-4 px-3 sm:px-6 text-[#FFFFF]">
                     {item.name}
                   </td>
-                  <td className="py-2 sm:py-4 px-3 sm:px-6 text-gray-800">
+                  <td className="py-2 sm:py-4 px-3 sm:px-6 text-[#FFFFF]">
                     {item.quantity}
                   </td>
                 </tr>
@@ -438,7 +438,7 @@ const ReportPageStock = () => {
 
         {/* Judul */}
         <div className="w-full sm:w-auto sm:ml-2 flex sm:justify-center justify-center mt-2 sm:mt-0">
-          <h1 className="text-xl sm:text-3xl font-bold text-gray-900 text-center sm:text-right">
+          <h1 className="text-xl sm:text-3xl font-bold text-[#FFFFF] text-center sm:text-right">
             Strawberry
           </h1>
         </div>

@@ -133,14 +133,14 @@ function PurchaseReport() {
                   </td>
                 </tr>
               ))}
-              <tr className="bg-gray-100 font-semibold">
-                <td className="py-3 px-4 text-sm" colSpan={5}>
+              <tr className="bg-[#D9D9D9] font-semibold">
+                <td className="py-3 px-4 text-neutral text-sm" colSpan={5}>
                   Total
                 </td>
-                <td className="py-3 px-4 text-sm">20.00</td>
-                <td className="py-3 px-4 text-sm">0.00</td>
-                <td className="py-3 px-4 text-sm">20.00</td>
-                <td className="py-3 px-4 text-sm"></td>
+                <td className="py-3 px-4 text-neutral text-sm">20.00</td>
+                <td className="py-3 px-4 text-neutral text-sm">0.00</td>
+                <td className="py-3 px-4 text-neutral text-sm">20.00</td>
+                <td className="py-3 px-4 text-neutral text-sm"></td>
               </tr>
             </tbody>
           </table>

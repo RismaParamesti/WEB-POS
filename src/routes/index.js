@@ -27,6 +27,10 @@ const CustomerReport = lazy(() => import('../pages/protected/CustomerReport'))
 const BestCustomer = lazy(() => import('../pages/protected/BestCustomer'))
 const TopSell = lazy(() => import('../pages/protected/TopSell'))
 
+const CreatePurchase = lazy(() => import('../pages/protected/CreatePurchase'))
+const ReturnPurchase = lazy(() => import('../pages/protected/ReturnPurchase'))
+const AllPurchase = lazy(() => import('../pages/protected/AllPurchase'))
+
 const Dashboard = lazy(() => import("../pages/protected/Dashboard"));
 const Welcome = lazy(() => import("../pages/protected/Welcome"));
 const Page404 = lazy(() => import("../pages/protected/404"));
@@ -109,6 +113,18 @@ const routes = [
   {
     path: "/warehouse-editTransfer",
     component: EditTransfer,
+  },
+  {
+    path: '/CreatePurchase',
+    component: CreatePurchase,
+  },
+  {
+    path: '/AllPurchases',
+    component: AllPurchase,
+  },
+  {
+    path: '/ReturnPurchases',
+    component: ReturnPurchase,
   },
   {
     path: '/SalesReport',
