@@ -48,15 +48,20 @@ const ProfileSettings = lazy(() =>
 const GettingStarted = lazy(() => import("../pages/GettingStarted"));
 const DocFeatures = lazy(() => import("../pages/DocFeatures"));
 const DocComponents = lazy(() => import("../pages/DocComponents"));
+const Customer = lazy(() => import('../features/people/customer'))
 
 const routes = [
   {
     path: "/dashboard", // the url
     component: Dashboard, // view rendered
   },
+  // {
+  //   path: "/welcome", // the url
+  //   component: Welcome, // view rendered
+  // },
   {
-    path: "/welcome", // the url
-    component: Welcome, // view rendered
+    path: '/customer',
+    component: Customer,
   },
   {
     path: "/product-createProduct",
