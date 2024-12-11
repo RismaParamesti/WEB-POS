@@ -41,26 +41,38 @@ function ViewModalBodyCustomer({ closeModal, customerId }) {
             </div>
             <div className="mt-4">
                 <div className="flex items-center rounded-lg p-3">
+                    <label className="block text-sm font-bold w-1/4">Address</label>
+                    <p className="w-3/4">{customerObj.address}</p>
+                </div>
+            </div>
+            <div className="mt-4">
+                <div className="flex items-center bg-gray-200 rounded-lg p-3">
+                    <label className="block text-sm font-bold w-1/4">City</label>
+                    <p className="w-3/4">{customerObj.city}</p>
+                </div>
+            </div>
+            <div className="mt-4">
+                <div className="flex items-center rounded-lg p-3">
+                    <label className="block text-sm font-bold w-1/4">Country</label>
+                    <p className="w-3/4">{customerObj.country}</p>
+                </div>
+            </div>
+            <div className="mt-4">
+                <div className="flex items-center bg-gray-200 rounded-lg p-3">
                     <label className="block text-sm font-bold w-1/4">Tax</label>
                     <p className="w-3/4">{customerObj.tax}</p>
                 </div>
             </div>
             <div className="mt-4">
-                <div className="flex items-center bg-gray-200 rounded-lg p-3">
-                    <label className="block text-sm font-bold w-1/4">Total Sales</label>
+                <div className="flex items-center rounded-lg p-3">
+                    <label className="block text-sm font-bold w-1/4">Total Sale Due</label>
                     <p className="w-3/4">{customerObj.totalSales}</p>
                 </div>
             </div>
             <div className="mt-4">
-                <div className="flex items-center rounded-lg p-3">
-                    <label className="block text-sm font-bold w-1/4">Return Sales</label>
-                    <p className="w-3/4">{customerObj.returnSales}</p>
-                </div>
-            </div>
-            <div className="mt-4">
                 <div className="flex items-center bg-gray-200 rounded-lg p-3">
-                    <label className="block text-sm font-bold w-1/4">Address</label>
-                    <p className="w-3/4">{customerObj.address}</p>
+                    <label className="block text-sm font-bold w-1/4">Total Sell Return Due</label>
+                    <p className="w-3/4">{customerObj.returnSales}</p>
                 </div>
             </div>
 

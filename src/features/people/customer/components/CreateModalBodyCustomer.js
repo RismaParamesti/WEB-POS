@@ -53,13 +53,93 @@ function CreateModalBodyCustomer({closeModal}){
 
     return(
         <>
-            <InputText type="text" defaultValue={customerObj.name} updateType="name" labelTitle="Name" updateFormValue={updateFormValue} />
-            <InputText type="text" defaultValue={customerObj.phone} updateType="phone" labelTitle="Phone" updateFormValue={updateFormValue} />
-            <InputText type="email" defaultValue={customerObj.email} updateType="email" labelTitle="Email" updateFormValue={updateFormValue} />
-            <InputText type="text" defaultValue={customerObj.tax} updateType="tax" labelTitle="Tax" updateFormValue={updateFormValue} />
-            <InputText type="text" defaultValue={customerObj.totalSales} updateType="totalSales" labelTitle="Total Sales" updateFormValue={updateFormValue} />
-            <InputText type="text" defaultValue={customerObj.returnSales} updateType="returnSales" labelTitle="Return Sales" updateFormValue={updateFormValue} />
-            <TextAreaInput type="text" defaultValue={customerObj.address} updateType="address" labelTitle="Address" updateFormValue={updateFormValue} />
+            <InputText 
+                type="text" 
+                defaultValue={customerObj.name} 
+                updateType="name" 
+                labelTitle="Name" 
+                updateFormValue={updateFormValue} 
+            />
+
+            <InputText 
+                type="text" 
+                defaultValue={customerObj.phone} 
+                updateType="phone" 
+                labelTitle="Phone" 
+                updateFormValue={updateFormValue} 
+            />
+
+            <InputText 
+                type="email" 
+                defaultValue={customerObj.email} 
+                updateType="email" 
+                labelTitle="Email" 
+                updateFormValue={updateFormValue} 
+            />
+
+            <InputText 
+                type="text" 
+                defaultValue={customerObj.tax} 
+                updateType="tax" 
+                labelTitle="Tax" 
+                updateFormValue={updateFormValue} 
+            />
+
+            <InputText 
+                type="text" 
+                defaultValue={customerObj.totalSales} 
+                updateType="totalSales" 
+                labelTitle="Total Sale Due" 
+                updateFormValue={updateFormValue} 
+            />
+
+            <InputText 
+                type="text" 
+                defaultValue={customerObj.returnSales} 
+                updateType="returnSales" 
+                labelTitle="Total Sell Return Due" 
+                updateFormValue={updateFormValue} 
+            />
+
+            <TextAreaInput 
+                type="text" 
+                defaultValue={customerObj.address} 
+                updateType="address" 
+                labelTitle="Address" 
+                updateFormValue={updateFormValue} 
+            />
+
+            <InputText 
+                type="text" 
+                defaultValue={customerObj.city} 
+                updateType="city" 
+                labelTitle="City" 
+                updateFormValue={updateFormValue} 
+            />
+
+            <InputText 
+                type="text" 
+                defaultValue={customerObj.country} 
+                updateType="country" 
+                labelTitle="Country" 
+                updateFormValue={updateFormValue} 
+            />
+
+            <InputText 
+                type="text" 
+                defaultValue={customerObj.creditCard} 
+                updateType="creditCard" 
+                labelTitle="Credit Card" 
+                updateFormValue={updateFormValue} 
+            />
+
+            <InputText 
+                type="text" 
+                defaultValue={customerObj.accountNumber} 
+                updateType="accountNumber" 
+                labelTitle="Account Number" 
+                updateFormValue={updateFormValue} 
+            />
 
             <ErrorText styleClass="mt-4">{errorMessage}</ErrorText>
             <div className="modal-action">

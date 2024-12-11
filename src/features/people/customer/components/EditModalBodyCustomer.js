@@ -88,6 +88,48 @@ function EditModalBodyCustomer({ closeModal, customerId }) {
             />
             <InputText
                 type="text"
+                value={customerObj.address}
+                onChange={(e) =>
+                    setCustomerObj({
+                        ...customerObj,
+                        tax: e.target.value,
+                    })
+                }
+                className="input input-bordered w-full mt-4"
+                labelTitle="Address" 
+                placeholder={customerObj.address}
+                updateFormValue={updateFormValue} 
+            />
+            <InputText
+                type="text"
+                value={customerObj.city}
+                onChange={(e) =>
+                    setCustomerObj({
+                        ...customerObj,
+                        tax: e.target.value,
+                    })
+                }
+                className="input input-bordered w-full mt-4"
+                labelTitle="City" 
+                placeholder={customerObj.city}
+                updateFormValue={updateFormValue} 
+            />
+            <InputText
+                type="text"
+                value={customerObj.country}
+                onChange={(e) =>
+                    setCustomerObj({
+                        ...customerObj,
+                        tax: e.target.value,
+                    })
+                }
+                className="input input-bordered w-full mt-4"
+                labelTitle="Country" 
+                placeholder={customerObj.country}
+                updateFormValue={updateFormValue} 
+            />
+            <InputText
+                type="text"
                 value={customerObj.tax}
                 onChange={(e) =>
                     setCustomerObj({
@@ -110,7 +152,7 @@ function EditModalBodyCustomer({ closeModal, customerId }) {
                     })
                 }
                 className="input input-bordered w-full mt-4"
-                labelTitle="Total Sales" 
+                labelTitle="Total Sale Due" 
                 placeholder={customerObj.totalSales}
                 updateFormValue={updateFormValue} 
             />
@@ -124,20 +166,11 @@ function EditModalBodyCustomer({ closeModal, customerId }) {
                     })
                 }
                 className="input input-bordered w-full mt-4"
-                labelTitle="Return Sales" 
+                labelTitle="Total Sell Return Due" 
                 placeholder={customerObj.returnSales}
                 updateFormValue={updateFormValue} 
             />
-
-            <TextAreaInput 
-                type="text" 
-                defaultValue={customerObj.address} 
-                updateType="address" 
-                labelTitle="Address" 
-                placeholder={customerObj.address}
-                updateFormValue={updateFormValue} 
-            />
-
+            
             <ErrorText styleClass="mt-4">{errorMessage}</ErrorText>
             <div className="modal-action">
                 <button className="btn btn-ghost" onClick={() => closeModal()}>Cancel</button>

@@ -10,32 +10,33 @@ import SearchBar from "../../../components/Input/SearchBar";
 import EllipsisVertical from '@heroicons/react/24/outline/EllipsisVerticalIcon';
 import Eye from '@heroicons/react/24/outline/EyeIcon';
 import PencilSquare from '@heroicons/react/24/outline/PencilSquareIcon';
+import CreditCard from '@heroicons/react/24/outline/CreditCardIcon';
 import Trash from '@heroicons/react/24/outline/TrashIcon';
 import Funnel from '@heroicons/react/24/outline/FunnelIcon';
 import PlusCircle from '@heroicons/react/24/outline/PlusCircleIcon';
 import DocumentChartBar from '@heroicons/react/24/outline/DocumentChartBarIcon';
 import DocumentText from '@heroicons/react/24/outline/DocumentTextIcon';
 import { NavLink,  Routes, Link , useLocation} from 'react-router-dom'
-import { openRightDrawer } from '../../common/rightDrawerSlice';
+import { openRightDrawer } from '../../../features/common/rightDrawerSlice';
 import { showNotification } from "../../common/headerSlice";
 import { openModal } from "../../common/modalSlice";
 import { deleteCustomer, editCustomer, getCustomersContent } from "./customersSlice";
-import { RIGHT_DRAWER_TYPES, CONFIRMATION_MODAL_CLOSE_TYPES, MODAL_BODY_TYPES } from '../../../utils/globalConstantUtil';
+import { RIGHT_DRAWER_TYPES, CONFIRMATION_MODAL_CLOSE_TYPES, MODAL_BODY_TYPES } from '../../../../src/utils/globalConstantUtil';
 
 export const CUSTOMERDATA = [
-  { customerId: 1, code: "43567", name: "Gina Maulinda", phone: "0893847829", email: "gina@gmail.com", tax: "100", totalSales: "1", returnSales: "0" },
-  { customerId: 2, code: "43568", name: "Ahmad Fikri", phone: "08123456789", email: "fikri@gmail.com", tax: "150", totalSales: "5", returnSales: "1" },
-  { customerId: 3, code: "43569", name: "Siti Nurhaliza", phone: "0876543210", email: "siti@gmail.com", tax: "200", totalSales: "10", returnSales: "2" },
-  { customerId: 4, code: "43567", name: "Gina Maulinda", phone: "0893847829", email: "gina@gmail.com", tax: "100", totalSales: "1", returnSales: "0" },
-  { customerId: 5, code: "43568", name: "Ahmad Fikri", phone: "08123456789", email: "fikri@gmail.com", tax: "150", totalSales: "5", returnSales: "1" },
-  { customerId: 6, code: "43569", name: "Siti Nurhaliza", phone: "0876543210", email: "siti@gmail.com", tax: "200", totalSales: "10", returnSales: "2" },
-  { customerId: 7, code: "43567", name: "Gina Maulinda", phone: "0893847829", email: "gina@gmail.com", tax: "100", totalSales: "1", returnSales: "0" },
-  { customerId: 8, code: "43568", name: "Ahmad Fikri", phone: "08123456789", email: "fikri@gmail.com", tax: "150", totalSales: "5", returnSales: "1" },
-  { customerId: 9, code: "43569", name: "Siti Nurhaliza", phone: "0876543210", email: "siti@gmail.com", tax: "200", totalSales: "10", returnSales: "2" },
-  { customerId: 10, code: "43569", name: "Siti Nurhaliza", phone: "0876543210", email: "siti@gmail.com", tax: "200", totalSales: "10", returnSales: "2" },
-  { customerId: 11, code: "43567", name: "Gina Maulinda", phone: "0893847829", email: "gina@gmail.com", tax: "100", totalSales: "1", returnSales: "0" },
-  { customerId: 12, code: "43568", name: "Ahmad Fikri", phone: "08123456789", email: "fikri@gmail.com", tax: "150", totalSales: "5", returnSales: "1" },
-  { customerId: 13, code: "43569", name: "Siti Nurhaliza", phone: "0876543210", email: "siti@gmail.com", tax: "200", totalSales: "10", returnSales: "2" },
+    { customerId: 1, code: "43567", name: "Gina Maulinda", phone: "0893847829", email: "gina@gmail.com", tax: "100", totalSales: "1", returnSales: "0", address: "Jl. Tunjungan No.10", city: "Surabaya", country: "Indonesia", creditCard: "4111-1111-1111-1111", accountNumber: "1234567890" },
+    { customerId: 2, code: "43568", name: "Ahmad Fikri", phone: "08123456789", email: "fikri@gmail.com", tax: "150", totalSales: "5", returnSales: "1", address: "Jl. Sudirman No.25", city: "Jakarta", country: "Indonesia", creditCard: "4222-2222-2222-2222", accountNumber: "0987654321" },
+    { customerId: 3, code: "43569", name: "Siti Nurhaliza", phone: "0876543210", email: "siti@gmail.com", tax: "200", totalSales: "10", returnSales: "2", address: "Jl. Braga No.5", city: "Bandung", country: "Indonesia", creditCard: "4333-3333-3333-3333", accountNumber: "1122334455" },
+    { customerId: 4, code: "43567", name: "Gina Maulinda", phone: "0893847829", email: "gina@gmail.com", tax: "100", totalSales: "1", returnSales: "0", address: "Jl. Tunjungan No.10", city: "Surabaya", country: "Indonesia", creditCard: "4111-1111-1111-1111", accountNumber: "1234567890" },
+    { customerId: 5, code: "43568", name: "Ahmad Fikri", phone: "08123456789", email: "fikri@gmail.com", tax: "150", totalSales: "5", returnSales: "1", address: "Jl. Sudirman No.25", city: "Jakarta", country: "Indonesia", creditCard: "4222-2222-2222-2222", accountNumber: "0987654321" },
+    { customerId: 6, code: "43569", name: "Siti Nurhaliza", phone: "0876543210", email: "siti@gmail.com", tax: "200", totalSales: "10", returnSales: "2", address: "Jl. Braga No.5", city: "Bandung", country: "Indonesia", creditCard: "4333-3333-3333-3333", accountNumber: "1122334455" },
+    { customerId: 7, code: "43567", name: "Gina Maulinda", phone: "0893847829", email: "gina@gmail.com", tax: "100", totalSales: "1", returnSales: "0", address: "Jl. Tunjungan No.10", city: "Surabaya", country: "Indonesia", creditCard: "4111-1111-1111-1111", accountNumber: "1234567890" },
+    { customerId: 8, code: "43568", name: "Ahmad Fikri", phone: "08123456789", email: "fikri@gmail.com", tax: "150", totalSales: "5", returnSales: "1", address: "Jl. Sudirman No.25", city: "Jakarta", country: "Indonesia", creditCard: "4222-2222-2222-2222", accountNumber: "0987654321" },
+    { customerId: 9, code: "43569", name: "Siti Nurhaliza", phone: "0876543210", email: "siti@gmail.com", tax: "200", totalSales: "10", returnSales: "2", address: "Jl. Braga No.5", city: "Bandung", country: "Indonesia", creditCard: "4333-3333-3333-3333", accountNumber: "1122334455" },
+    { customerId: 10, code: "43569", name: "Siti Nurhaliza", phone: "0876543210", email: "siti@gmail.com", tax: "200", totalSales: "10", returnSales: "2", address: "Jl. Braga No.5", city: "Bandung", country: "Indonesia", creditCard: "4333-3333-3333-3333", accountNumber: "1122334455" },
+    { customerId: 11, code: "43567", name: "Gina Maulinda", phone: "0893847829", email: "gina@gmail.com", tax: "100", totalSales: "1", returnSales: "0", address: "Jl. Tunjungan No.10", city: "Surabaya", country: "Indonesia", creditCard: "4111-1111-1111-1111", accountNumber: "1234567890" },
+    { customerId: 12, code: "43568", name: "Ahmad Fikri", phone: "08123456789", email: "fikri@gmail.com", tax: "150", totalSales: "5", returnSales: "1", address: "Jl. Sudirman No.25", city: "Jakarta", country: "Indonesia", creditCard: "4222-2222-2222-2222", accountNumber: "0987654321" },
+    { customerId: 13, code: "43569", name: "Siti Nurhaliza", phone: "0876543210", email: "siti@gmail.com", tax: "200", totalSales: "10", returnSales: "2", address: "Jl. Braga No.5", city: "Bandung", country: "Indonesia", creditCard: "4333-3333-3333-3333", accountNumber: "1122334455" },
 ];
 
 function Customer() {
@@ -99,15 +100,20 @@ function Customer() {
     doc.text("Customer Data", 14, 10);
   
     // Data tabel
-    const tableColumn = ["Code", "Name", "Phone", "Email", "Tax Number", "Total Sales", "Return Sales"];
+    const tableColumn = ["Code", "Name", "Phone", "Email", "Tax Number", "Address", "City", "Country", "Total Sale Due", "Total Sell Return Due", "Credit Card", "Account Number"];
     const tableRows = CUSTOMERDATA.map(item => [
       item.code,
       item.name,
       item.phone,
       item.email,
       item.tax,
+      item.address,
+      item.city,
+      item.country,
       item.totalSales,
       item.returnSales,
+      item.creditCard,
+      item.accountNumber,
     ]);
   
     // Menambahkan tabel ke PDF
@@ -150,6 +156,11 @@ function Customer() {
         }
     }));
   };
+
+  // INFO CARD
+  const openCardCustomer = () => {
+    dispatch(openModal({title : "Credit Card Info", bodyType : MODAL_BODY_TYPES.CUSTOMER_CARD}))
+  }
 
   const handleDeleteConfirmation = async (index) => {
       dispatch(deleteCustomer(index)); 
@@ -209,8 +220,12 @@ function Customer() {
                 <th className="text-center text-primary text-base">Phone</th>
                 <th className="text-center text-primary text-base">Email</th>
                 <th className="text-center text-primary text-base">Tax Number</th>
-                <th className="text-center text-primary text-base">Total Sales</th>
-                <th className="text-center text-primary text-base">Return Sales</th>
+                <th className="text-center text-primary text-base">
+                    Total Sale <br /> Due
+                    </th>
+                    <th className="text-center text-primary text-base">
+                    Total Sale <br /> Return Due
+                    </th>
                 <th className="text-center text-primary text-base">Action</th>
                 </tr>
             </thead>
@@ -240,6 +255,14 @@ function Customer() {
                                   <span>View</span>
                               </li>
                           </div>
+
+                          {/* Card Info */}
+                          <div className="flex items-center ml-2">
+                            <CreditCard className="h-5 w-5 inline-block" />
+                            <li onClick={() => openCardCustomer(customer.customerId)}> 
+                                <span>Card</span>
+                            </li>
+                          </div>
                           
                           {/* Edit */}
                           <div className="flex items-center ml-2">
@@ -266,26 +289,34 @@ function Customer() {
           </table>
         </div>
 
-        {/* Pagination */}
-        <div className="flex justify-end items-center mt-5 mr-5 space-x-4">
-        {/* Text for current page */}
-        <span className="text-sm text-gray-500">
-          Page {currentPage} of {totalPages}
-        </span>
+        {/* Page Content */}
+        <div className="flex justify-between items-center mt-5 mx-5 space-x-4">
+          {/* Text for current page */}
+          <span className="text-sm text-gray-500">
+            Rows Per Page <span className="font-bold text-primary">{itemsPerPage}</span>
+          </span>
 
-        {/* Pagination buttons */}
-        <div className="join">
-          {Array.from({ length: totalPages }, (_, i) => (
-            <button
-              key={i + 1}
-              className={`join-item btn btn-sm ${currentPage === i + 1 ? 'btn-primary btn-active' : ''}`}
-              onClick={() => setCurrentPage(i + 1)}
-            >
-              {i + 1}
-            </button>
-          ))}
+          {/* Pagination */}
+          <div className="flex justify-end items-center space-x-4">
+            {/* Text for current page */}
+            <span className="text-sm text-gray-500">
+              Page <span className="font-bold text-primary">{currentPage}</span> of <span className="font-bold text-primary">{totalPages}</span>
+            </span>
+
+            {/* Pagination buttons */}
+            <div className="join">
+              {Array.from({ length: totalPages }, (_, i) => (
+                <button
+                  key={i + 1}
+                  className={`join-item btn btn-sm ${currentPage === i + 1 ? 'btn-primary btn-active' : ''}`}
+                  onClick={() => setCurrentPage(i + 1)}
+                >
+                  {i + 1}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
       </TitleCard>     
     </>
   );

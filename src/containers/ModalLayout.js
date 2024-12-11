@@ -7,6 +7,7 @@ import ConfirmationModalBody from '../features/common/components/ConfirmationMod
 import CreateModalBodyCustomer from '../features/people/customer/components/CreateModalBodyCustomer'
 import EditModalBodyCustomer from '../features/people/customer/components/EditModalBodyCustomer'
 import ViewModalBodyCustomer from '../features/people/customer/components/ViewModalBodyCustomer'
+import CardInfoModalBodyCustomer from '../features/people/customer/components/CardInfoModalBodyCustomer'
 
 
 function ModalLayout(){
@@ -45,7 +46,8 @@ function ModalLayout(){
                               [MODAL_BODY_TYPES.CUSTOMER_ADD_NEW] : <CreateModalBodyCustomer extraObject={extraObject} closeModal={close}/>,
                               [MODAL_BODY_TYPES.CUSTOMER_EDIT] : <EditModalBodyCustomer extraObject={extraObject} closeModal={close}/>,
                               [MODAL_BODY_TYPES.CUSTOMER_VIEW] : <ViewModalBodyCustomer extraObject={extraObject} closeModal={close}/>,
- 
+                              [MODAL_BODY_TYPES.CUSTOMER_CARD] : <CardInfoModalBodyCustomer extraObject={extraObject} closeModal={close}/>,
+                              
                               // DEFAULT
                               [MODAL_BODY_TYPES.DEFAULT] : <div></div>
                     }[bodyType]
