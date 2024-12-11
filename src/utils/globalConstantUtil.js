@@ -3,6 +3,9 @@ module.exports = Object.freeze({
     MODAL_BODY_TYPES : {
         USER_DETAIL : "USER_DETAIL",
         LEAD_ADD_NEW : "LEAD_ADD_NEW",
+        CUSTOMER_ADD_NEW : "CUSTOMER_ADD_NEW",
+        CUSTOMER_EDIT : "CUSTOMER_EDIT",
+        CUSTOMER_VIEW : "CUSTOMER_VIEW",
         CONFIRMATION : "CONFIRMATION",
         DEFAULT : "",
     },
@@ -10,9 +13,12 @@ module.exports = Object.freeze({
     RIGHT_DRAWER_TYPES : {
         NOTIFICATION : "NOTIFICATION",
         CALENDAR_EVENTS : "CALENDAR_EVENTS",
+        CUSTOMER_FILTER : "CUSTOMER_FILTER"
     },
 
     CONFIRMATION_MODAL_CLOSE_TYPES : {
         LEAD_DELETE : "LEAD_DELETE",
+        CUSTOMER_DELETE : "CUSTOMER_DELETE",
+        
     },
 });

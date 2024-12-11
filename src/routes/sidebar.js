@@ -99,7 +99,7 @@ const routes = [
     name: "People", // name that appear in Sidebar
     submenu: [
       {
-        path: "/app/Customers",
+        path: '/app/customer',
         name: "Customers",
       },
       {

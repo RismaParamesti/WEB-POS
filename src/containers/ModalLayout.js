@@ -4,6 +4,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { closeModal } from '../features/common/modalSlice'
 import AddLeadModalBody from '../features/leads/components/AddLeadModalBody'
 import ConfirmationModalBody from '../features/common/components/ConfirmationModalBody'
+import CreateModalBodyCustomer from '../features/people/customer/components/CreateModalBodyCustomer'
+import EditModalBodyCustomer from '../features/people/customer/components/EditModalBodyCustomer'
+import ViewModalBodyCustomer from '../features/people/customer/components/ViewModalBodyCustomer'
+import CardInfoModalBodyCustomer from '../features/people/customer/components/CardInfoModalBodyCustomer'
 
 
 function ModalLayout(){
@@ -32,9 +36,20 @@ function ModalLayout(){
                 {/* Loading modal body according to different modal type */}
                 {
                     {
-                             [MODAL_BODY_TYPES.LEAD_ADD_NEW] : <AddLeadModalBody closeModal={close} extraObject={extraObject}/>,
-                             [MODAL_BODY_TYPES.CONFIRMATION] : <ConfirmationModalBody extraObject={extraObject} closeModal={close}/>,
-                             [MODAL_BODY_TYPES.DEFAULT] : <div></div>
+                              // LEAD
+                              [MODAL_BODY_TYPES.LEAD_ADD_NEW] : <AddLeadModalBody closeModal={close} extraObject={extraObject}/>,
+
+                              // CONFIRM
+                              [MODAL_BODY_TYPES.CONFIRMATION] : <ConfirmationModalBody extraObject={extraObject} closeModal={close}/>,
+ 
+                              // CUSTOMER
+                              [MODAL_BODY_TYPES.CUSTOMER_ADD_NEW] : <CreateModalBodyCustomer extraObject={extraObject} closeModal={close}/>,
+                              [MODAL_BODY_TYPES.CUSTOMER_EDIT] : <EditModalBodyCustomer extraObject={extraObject} closeModal={close}/>,
+                              [MODAL_BODY_TYPES.CUSTOMER_VIEW] : <ViewModalBodyCustomer extraObject={extraObject} closeModal={close}/>,
+                              [MODAL_BODY_TYPES.CUSTOMER_CARD] : <CardInfoModalBodyCustomer extraObject={extraObject} closeModal={close}/>,
+                              
+                              // DEFAULT
+                              [MODAL_BODY_TYPES.DEFAULT] : <div></div>
                     }[bodyType]
                 }
             </div>
