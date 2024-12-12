@@ -9,9 +9,15 @@ import EditModalBodyCustomer from '../features/people/customer/components/EditMo
 import ViewModalBodyCustomer from '../features/people/customer/components/ViewModalBodyCustomer'
 import CardInfoModalBodyCustomer from '../features/people/customer/components/CardInfoModalBodyCustomer'
 
+import CreateModalBodySupplier from '../features/people/supplier/components/CreateModalBodySupplier'
+import EditModalBodySupplier from '../features/people/supplier/components/EditModalBodySupplier'
+import ViewModalBodySupplier from '../features/people/supplier/components/ViewModalBodySupplier'
+
+import CreateModalBodyUser from '../features/people/user/components/CreateModalBodyUser'
+import EditModalBodyUser from '../features/people/user/components/EditModalBodyUser'
+import ViewModalBodyUser from '../features/people/user/components/ViewModalBodyUser'
 
 function ModalLayout(){
-
 
     const {isOpen, bodyType, size, extraObject, title} = useSelector(state => state.modal)
     const dispatch = useDispatch()
@@ -19,8 +25,6 @@ function ModalLayout(){
     const close = (e) => {
         dispatch(closeModal(e))
     }
-
-
 
     return(
         <>
@@ -35,21 +39,31 @@ function ModalLayout(){
 
                 {/* Loading modal body according to different modal type */}
                 {
-                    {
-                              // LEAD
-                              [MODAL_BODY_TYPES.LEAD_ADD_NEW] : <AddLeadModalBody closeModal={close} extraObject={extraObject}/>,
+                    {        
+                             // LEAD
+                             [MODAL_BODY_TYPES.LEAD_ADD_NEW] : <AddLeadModalBody closeModal={close} extraObject={extraObject}/>,
 
-                              // CONFIRM
-                              [MODAL_BODY_TYPES.CONFIRMATION] : <ConfirmationModalBody extraObject={extraObject} closeModal={close}/>,
- 
-                              // CUSTOMER
-                              [MODAL_BODY_TYPES.CUSTOMER_ADD_NEW] : <CreateModalBodyCustomer extraObject={extraObject} closeModal={close}/>,
-                              [MODAL_BODY_TYPES.CUSTOMER_EDIT] : <EditModalBodyCustomer extraObject={extraObject} closeModal={close}/>,
-                              [MODAL_BODY_TYPES.CUSTOMER_VIEW] : <ViewModalBodyCustomer extraObject={extraObject} closeModal={close}/>,
-                              [MODAL_BODY_TYPES.CUSTOMER_CARD] : <CardInfoModalBodyCustomer extraObject={extraObject} closeModal={close}/>,
-                              
-                              // DEFAULT
-                              [MODAL_BODY_TYPES.DEFAULT] : <div></div>
+                             // CONFIRM
+                             [MODAL_BODY_TYPES.CONFIRMATION] : <ConfirmationModalBody extraObject={extraObject} closeModal={close}/>,
+
+                             // CUSTOMER
+                             [MODAL_BODY_TYPES.CUSTOMER_ADD_NEW] : <CreateModalBodyCustomer extraObject={extraObject} closeModal={close}/>,
+                             [MODAL_BODY_TYPES.CUSTOMER_EDIT] : <EditModalBodyCustomer extraObject={extraObject} closeModal={close}/>,
+                             [MODAL_BODY_TYPES.CUSTOMER_VIEW] : <ViewModalBodyCustomer extraObject={extraObject} closeModal={close}/>,
+                             [MODAL_BODY_TYPES.CUSTOMER_CARD] : <CardInfoModalBodyCustomer extraObject={extraObject} closeModal={close}/>,
+
+                             // SUPPLIER
+                             [MODAL_BODY_TYPES.SUPPLIER_ADD_NEW] : <CreateModalBodySupplier extraObject={extraObject} closeModal={close}/>,
+                             [MODAL_BODY_TYPES.SUPPLIER_EDIT] : <EditModalBodySupplier extraObject={extraObject} closeModal={close}/>,
+                             [MODAL_BODY_TYPES.SUPPLIER_VIEW] : <ViewModalBodySupplier extraObject={extraObject} closeModal={close}/>,
+
+                             // USER
+                             [MODAL_BODY_TYPES.USER_ADD_NEW] : <CreateModalBodyUser extraObject={extraObject} closeModal={close}/>,
+                             [MODAL_BODY_TYPES.USER_EDIT] : <EditModalBodyUser extraObject={extraObject} closeModal={close}/>,
+                             [MODAL_BODY_TYPES.USER_VIEW] : <ViewModalBodyUser extraObject={extraObject} closeModal={close}/>,
+
+                             // DEFAULT
+                             [MODAL_BODY_TYPES.DEFAULT] : <div></div>
                     }[bodyType]
                 }
             </div>

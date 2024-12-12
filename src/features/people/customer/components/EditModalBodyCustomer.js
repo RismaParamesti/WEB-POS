@@ -23,18 +23,15 @@ function EditModalBodyCustomer({ closeModal, customerId }) {
     }, [customerId]);
 
     const saveEditCustomer = () => {
-        if (customerObj.name.trim() === "") return setErrorMessage("Name is required!");
-        else if (customerObj.email.trim() === "") return setErrorMessage("Email is required!");
-        else {
-            const editCustomerObj = {
-                id: customerId,
-                ...customerObj,
-            };
-            dispatch(editCustomer(editCustomerObj));
-            dispatch(showNotification({ message: "Edit Customer Success!", status: 1 }));
-            closeModal();
-        }
+        const editCustomerObj = {
+            id: customerId,
+            ...customerObj,
+        };
+        dispatch(editCustomer(editCustomerObj));
+        dispatch(showNotification({ message: "Edit Customer Success!", status: 1 }));
+        closeModal();
     };
+    
 
     const updateFormValue = ({ updateType, value }) => {
         setErrorMessage("");

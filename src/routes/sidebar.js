@@ -103,11 +103,11 @@ const routes = [
         name: "Customers",
       },
       {
-        path: "/app/Suppliers",
+        path: "/app/supplier",
         name: "Suppliers",
       },
       {
-        path: "/app/User",
+        path: "user",
         name: "User",
       },
     ],
