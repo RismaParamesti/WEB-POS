@@ -42,17 +42,17 @@ function LineChart(){
   datasets: [
     {
       fill: true,
-      label: 'MAU',
-      data: labels.map(() => { return Math.random() * 100 + 500 }),
-      borderColor: 'rgb(53, 162, 235)',
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      label: 'Using Average Cost',
+      data: labels.map(() => { return Math.random() * 1600 + 200 }),
+      borderColor: 'rgb(62, 51, 200)',
+      backgroundColor: 'rgba(180, 174, 255, 0.5)',
     },
   ],
 };
   
 
     return(
-      <TitleCard title={"Montly Active Users (in K)"}>
+      <TitleCard title={"Profit Net"}>
           <Line data={data} options={options}/>
       </TitleCard>
     )
