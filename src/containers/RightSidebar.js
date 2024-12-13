@@ -7,6 +7,7 @@ import CalendarEventsBodyRightDrawer from '../features/calendar/CalendarEventsBo
 import CustomerFilterEventsBodyRightDrawer from '../features/people/customer/CustomerFilterBodyRightDrawer'
 import SupplierFilterEventsBodyRightDrawer from '../features/people/supplier/SupplierFilterBodyRightDrawer'
 import UserFilterBodyRightDrawer from '../features/people/user/UserFilterBodyRightDrawer'
+import SalesFilterBodyRightDrawer from '../features/sales/allsales/SalesFilterBodyRightDrawer'
 
 function RightSidebar(){
 
@@ -43,7 +44,8 @@ function RightSidebar(){
                                         [RIGHT_DRAWER_TYPES.CALENDAR_EVENTS] : <CalendarEventsBodyRightDrawer {...extraObject} closeRightDrawer={close}/>,
                                         [RIGHT_DRAWER_TYPES.CUSTOMER_FILTER] : <CustomerFilterEventsBodyRightDrawer {...extraObject} closeRightDrawer={close}/>,
                                         [RIGHT_DRAWER_TYPES.SUPPLIER_FILTER] : <SupplierFilterEventsBodyRightDrawer {...extraObject} closeRightDrawer={close}/>,
-                                        [RIGHT_DRAWER_TYPES.USER_FILTER] : <UserFilterBodyRightDrawer {...extraObject} closeRightDrawer={close}/>,
+                                        [RIGHT_DRAWER_TYPES.USER_FILTER] : <UserFilterBodyRightDrawer {...extraObject} closeRightDrawer={close}/>,                                        
+                                        [RIGHT_DRAWER_TYPES.SALES_FILTER] : <SalesFilterBodyRightDrawer {...extraObject} closeRightDrawer={close}/>,
                                         [RIGHT_DRAWER_TYPES.DEFAULT] : <div></div>
                                 }[bodyType]
                             }

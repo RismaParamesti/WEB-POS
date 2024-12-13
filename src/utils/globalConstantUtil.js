@@ -17,6 +17,9 @@ module.exports = Object.freeze({
         USER_EDIT : "USER_EDIT",
         USER_VIEW : "USER_VIEW",
         USER_CARD : "USER_CARD",
+
+        PAYMENT_ADD_NEW : "PAYMENT_ADD_NEW",
+        PAYMENT_INVOICE : "PAYMENT_INVOICE",
         CONFIRMATION : "CONFIRMATION",
         DEFAULT : "",
     },
@@ -26,7 +29,8 @@ module.exports = Object.freeze({
         CALENDAR_EVENTS : "CALENDAR_EVENTS",
         CUSTOMER_FILTER : "CUSTOMER_FILTER",
         SUPPLIER_FILTER : "SUPPLIER_FILTER",
-        USER_FILTER : "USER_FILTER"
+        USER_FILTER : "USER_FILTER",
+        SALES_FILTER : "SALES_FILTER"
     },
 
     CONFIRMATION_MODAL_CLOSE_TYPES : {
@@ -34,6 +38,7 @@ module.exports = Object.freeze({
         CUSTOMER_DELETE : "CUSTOMER_DELETE",
         SUPPLIER_DELETE : "SUPPLIER_DELETE",
         USER_DELETE : "USER_DELETE",
+        SALES_DELETE : "SALES_DELETE",
         
     },
 });

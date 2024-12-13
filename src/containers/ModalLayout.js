@@ -17,6 +17,9 @@ import CreateModalBodyUser from '../features/people/user/components/CreateModalB
 import EditModalBodyUser from '../features/people/user/components/EditModalBodyUser'
 import ViewModalBodyUser from '../features/people/user/components/ViewModalBodyUser'
 
+import CreateModalBodyPayment from '../features/sales/pos/CreateModalBodyPayment'
+import InvoiceModalBodyPayment from '../features/sales/pos/InvoiceModalBodyPayment'
+
 function ModalLayout(){
 
     const {isOpen, bodyType, size, extraObject, title} = useSelector(state => state.modal)
@@ -61,6 +64,9 @@ function ModalLayout(){
                              [MODAL_BODY_TYPES.USER_ADD_NEW] : <CreateModalBodyUser extraObject={extraObject} closeModal={close}/>,
                              [MODAL_BODY_TYPES.USER_EDIT] : <EditModalBodyUser extraObject={extraObject} closeModal={close}/>,
                              [MODAL_BODY_TYPES.USER_VIEW] : <ViewModalBodyUser extraObject={extraObject} closeModal={close}/>,
+
+                             [MODAL_BODY_TYPES.PAYMENT_ADD_NEW] : <CreateModalBodyPayment extraObject={extraObject} closeModal={close}/>,
+                             [MODAL_BODY_TYPES.PAYMENT_INVOICE] : <InvoiceModalBodyPayment extraObject={extraObject} closeModal={close}/>,
 
                              // DEFAULT
                              [MODAL_BODY_TYPES.DEFAULT] : <div></div>
