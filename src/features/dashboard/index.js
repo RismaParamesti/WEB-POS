@@ -56,7 +56,7 @@ const statsData = [
                 <PresentationChartBarIcon className="w-6 h-6" />
             </button>
         ),
-        description: "↙ 300 (18%)"
+        description: "↙ 300 (9%)"
     }
 ];
 
