@@ -48,7 +48,16 @@ const ProfileSettings = lazy(() =>
 const GettingStarted = lazy(() => import("../pages/GettingStarted"));
 const DocFeatures = lazy(() => import("../pages/DocFeatures"));
 const DocComponents = lazy(() => import("../pages/DocComponents"));
-const Customer = lazy(() => import('../features/people/customer'))
+const Customer = lazy(() => import('../features/people/customer'));
+const Supplier = lazy(() => import('../features/people/supplier'));
+const User = lazy(() => import('../features/people/user'));
+const AllSales = lazy(() => import('../features/sales/allsales'))
+const CreateSales = lazy(() => import('../features/sales/createsales'))
+const POS = lazy(() => import('../features/sales/pos'))
+const ReturnSales = lazy(() => import('../features/sales/returnsales'))
+const SalesDetail = lazy(() => import('../features/sales/allsales/SalesDetail'))
+const ReturnDetail = lazy(() => import('../features/sales/returnsales/ReturnDetail'))
+
 
 const routes = [
   {
@@ -62,6 +71,37 @@ const routes = [
   {
     path: '/customer',
     component: Customer,
+  },
+  {
+    path: '/supplier',
+    component: Supplier,
+  },
+  {
+    path: '/user',
+    component: User,
+  },
+  {
+    path: '/allsales',
+    component: AllSales,
+  },
+  {
+    path: '/salesdetail',
+    component: SalesDetail,
+  },
+  {
+    path: '/createsales',
+    component: CreateSales,
+  },
+  {
+    path: '/returnsales',
+    component: ReturnSales,
+  },{
+    path: '/returndetail',
+    component: ReturnDetail,
+  },
+  {
+    path: '/pos',
+    component: POS,
   },
   {
     path: "/product-createProduct",

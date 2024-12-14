@@ -7,8 +7,9 @@ import MoonIcon from '@heroicons/react/24/outline/MoonIcon'
 import SunIcon from '@heroicons/react/24/outline/SunIcon'
 import { openRightDrawer } from '../features/common/rightDrawerSlice';
 import { RIGHT_DRAWER_TYPES } from '../utils/globalConstantUtil'
+import POS from "../features/sales/pos";
 
-import { NavLink,  Routes, Link , useLocation} from 'react-router-dom'
+import { NavLink,  Routes, Link , useLocation, useNavigate} from 'react-router-dom'
 
 
 function Header(){
@@ -28,6 +29,13 @@ function Header(){
         }
         // 👆 false parameter is required for react project
       }, [])
+
+    // VIEW
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate("/app/pos");
+    };
 
 
     // Opening right sidebar for notification
@@ -70,7 +78,8 @@ function Header(){
                     <option value="retro">Retro</option>
                 </select> */}
             {/* Notification icon */}
-            <button class="btn btn-sm btn-primary mx-7" >                  
+                <button class="btn btn-sm btn-primary mx-7"
+                    onClick={handleClick} >                  
                     <span className="text-bold">POS</span>
                 </button>
 

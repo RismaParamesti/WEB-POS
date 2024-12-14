@@ -103,36 +103,32 @@ const routes = [
         name: "Customers",
       },
       {
-        path: "/app/Suppliers",
+        path: "/app/supplier",
         name: "Suppliers",
       },
       {
-        path: "/app/User",
+        path: "user",
         name: "User",
       },
     ],
   },
 
   {
-    path: "", //no url needed as this has submenu
-    icon: <SwatchIcon className={`${iconClasses} inline`} />, // icon component
-    name: "Sales", // name that appear in Sidebar
+    path: "", 
+    icon: <SwatchIcon className={`${iconClasses} inline`} />, 
+    name: "Sales",
     submenu: [
       {
-        path: "/app/CreateSale",
-        name: "Create Sale",
+        path: '/app/createsales',
+        name: 'Create Sales',
       },
       {
-        path: "/app/AllSales",
-        name: "All Sales",
+        path: '/app/allsales',
+        name: 'All Sales', 
       },
-      // {
-      //   path: '/app/Pos',
-      //   name: 'POS',
-      // },
       {
-        path: "/app/ReturnSales",
-        name: "Return Sales",
+        path: '/app/returnsales', 
+        name: 'Return Sales',
       },
     ],
   },
