@@ -13,6 +13,7 @@ import { showNotification } from "../../common/headerSlice";
 import { openModal } from "../../common/modalSlice";
 import { deletePayment, editPayment, getPaymentContent } from "../pos/PaymentSlice";
 import { MODAL_BODY_TYPES } from '../../../../src/utils/globalConstantUtil';
+import { NavLink,  Routes, Link , useLocation, useNavigate} from 'react-router-dom'
 
 
 function POS() {
@@ -22,6 +23,7 @@ function POS() {
     const [productCode, setProductCode] = useState("");
     const [orderItems, setOrderItems] = useState([]);
     const [shipping, setShipping] = useState(0);
+    const [searchText, setSearchText] = useState(""); // Untuk teks pencarian
     const [cartItems, setCartItems] = useState([
         { id: 1, product: "Pineapple", price: 16, quantity: 1 },
         { id: 2, product: "Lemon", price: 16, quantity: 1 },
@@ -55,7 +57,6 @@ function POS() {
     const openCreatePayment = () => {
         dispatch(openModal({title : "Create Payment", bodyType : MODAL_BODY_TYPES.PAYMENT_ADD_NEW}))
     }
-
     
     const toggleScanner = () => {
         setScanning(!scanning);
@@ -71,6 +72,14 @@ function POS() {
         (total, item) => total + item.price * item.quantity,
         0
     );
+
+     // VIEW
+     const navigate = useNavigate();
+
+     const handleClick = () => {
+         navigate("/app/dashboard");
+     };
+ 
 
     const finalTotal = totalPayable + orderTax - discount + shipping;
 
@@ -140,8 +149,7 @@ function POS() {
 
     return (
         <>
-            <TitleCard>
-                <div className="flex flex-row gap-4">
+                <div className="flex flex-row gap-2">
                     {/* Bagian Transaksi */}
                     <div className="flex flex-col h-screen">
                         {/* Konten Utama */}
@@ -163,6 +171,10 @@ function POS() {
 
                             {/* Ikon dan Profil */}
                             <div className="flex items-center space-x-4">
+                                <button class="border btn-sm border-primary text-primary rounded-md px-4 py-2 flex items-center space-x-1 hover:bg-primary hover:text-white transition duration-200"
+                                    onClick={handleClick} >                  
+                                    <span className="text-semibold">Back</span>
+                                </button>
                                 <Squares2X2Icon className="h-6 w-6" />
                                 <ShoppingCart className="h-6 w-6" />
                                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
@@ -244,7 +256,7 @@ function POS() {
 
                             <div className="flex justify-between items-center mt-4 space-x-4">
                             <div className="flex flex-col">
-                                <label className="text-gray-700 text-sm">Order Tax</label>
+                                <label className="text-gray-700 text-sm mb-2">Order Tax</label>
                                 <div className="relative">
                                 <input
                                     type="number"
@@ -257,7 +269,7 @@ function POS() {
                             </div>
 
                             <div className="flex flex-col">
-                                <label className="text-gray-700 text-sm">Discount</label>
+                                <label className="text-gray-700 text-sm mb-2">Discount</label>
                                 <div className="relative">
                                 <input
                                     type="number"
@@ -265,12 +277,12 @@ function POS() {
                                     onChange={(e) => setDiscount(parseFloat(e.target.value) || 0)}
                                     className="border rounded px-3 py-2 w-full text-sm"
                                 />
-                                <span className="absolute top-2 right-3 text-gray-500">$</span>
+                                <span className="absolute top-2 right-3 text-gray-500">%</span>
                                 </div>
                             </div>
 
                             <div className="flex flex-col">
-                                <label className="text-gray-700 text-sm">Shipping</label>
+                                <label className="text-gray-700 text-sm mb-2">Shipping</label>
                                 <div className="relative">
                                 <input
                                     type="number"
@@ -310,20 +322,27 @@ function POS() {
                                 onClick={toggleScanner}
                                 className="btn btn-primary mr-4 flex items-center"
                             >
-                                <QrCodeIcon className="w-10 h-10 mr-1" />
+                                <QrCodeIcon className="w-10 h-10 mr-1" 
+                                onUpdate={(err, result) => {
+                                    if (result) handleBarcodeScan(result);
+                                  }}/>
                             </button>
                             <input
                                 type="text"
-                                value={productCode}
-                                onChange={(e) => setProductCode(e.target.value)}
-                                placeholder="Scan or Search Product By Code"
+                                value={searchText}
+                                onChange={(e) => {
+                                    const text = e.target.value;
+                                    setSearchText(text); // Update teks pencarian
+                                    setCurrentPage(1); // Reset halaman ke awal setelah pencarian
+                                }}
+                                placeholder="Search Product By Name"
                                 className="input input-bordered w-full"
-                            />
+                                />
                             </div>
                         </div>
 
                         {/* Products Section */}
-                        <div className="grid grid-cols-3 gap-4">
+                        <div className="grid grid-cols-3 gap-4 mt-10">
                             {currentProducts.map((product) => (
                                 <div key={product.id} className="border rounded p-2 text-center bg-white">
                                     <img
@@ -358,7 +377,6 @@ function POS() {
                         </div>
                     </div>
                 </div>
-            </TitleCard>
         </>
     );
 }
