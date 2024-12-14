@@ -10,6 +10,7 @@ import { themeChange } from "theme-change";
 import checkAuth from "./app/auth";
 import initializeApp from "./app/init";
 import EditProduct from "./features/product/allProduct/editProduct";
+import ModalLayout from "./containers/ModalLayout";
 
 // Importing pages
 const Layout = lazy(() => import("./containers/Layout"));
@@ -22,6 +23,8 @@ const AllProducts = lazy(() => import("./features/product/allProduct"));
 const DetailProduct = lazy(() =>
   import("./features/product/allProduct/detailProduct")
 );
+const HideLayout = lazy(() => import("./containers/HideLayout"));
+const POS = lazy(() => import("./features/sales/pos"));
 
 // Initializing different libraries
 initializeApp();
@@ -60,6 +63,17 @@ function App() {
             />
           </Route>
 
+          {/* POS Page with HideLayout */}
+          <Route
+            path="/app/pos"
+            element={
+              <HideLayout>
+                <POS />
+                <ModalLayout/>
+              </HideLayout>
+            }
+          />
+
           {/* Catch-all route */}
           <Route
             path="*"
@@ -72,5 +86,6 @@ function App() {
     </>
   );
 }
+
 
 export default App;
