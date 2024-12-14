@@ -5,7 +5,7 @@ import {
   DocumentTextIcon,
   DocumentArrowDownIcon,
   TrashIcon,
-  PencilIcon,
+  PencilSquareIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   MagnifyingGlassIcon,
@@ -14,7 +14,7 @@ import {
 import TitleCard from "../../../components/Cards/TitleCard";
 import FilterAllPurchases from "./Filter"; // Import komponen filter
 import PurchaseDetail from "./PurchaseDetail/index";
-import EditPurchase from "./PurchaseDetail/PurchaseEdit"
+import EditPurchase from "./PurchaseDetail/PurchaseEdit";
 import CreatePurchase from "../CreatePurchase";
 
 const ALL_PURCHASES_DATA = [
@@ -73,7 +73,9 @@ function AllPurchases() {
   };
 
   const handleDeleteConfirm = () => {
-    const updatedPurchasesData = allPurchases.filter((_, i) => i !== deleteIndex);
+    const updatedPurchasesData = allPurchases.filter(
+      (_, i) => i !== deleteIndex
+    );
     setAllPurchases(updatedPurchasesData);
     setPopupVisible(false);
     setDeleteIndex(null);
@@ -87,7 +89,6 @@ function AllPurchases() {
   const navigateToPurchaseDetail = () => setIsPurchaseDetail(true);
   const navigateToPurchaseEdit = () => setIsPurchaseEdit(true);
   const navigateToCreatePurchase = () => setIsCreatePurchases(true);
-
 
   if (isPurchaseDetail) {
     return <PurchaseDetail />;
@@ -156,7 +157,7 @@ function AllPurchases() {
             </button>
             <button
               onClick={() => navigateToCreatePurchase()}
-              className="bg-purple-500 text-white flex items-center text-sm h-15 px-4 rounded-lg hover:bg-purple-600"
+            className="btn btn-primary flex items-center"
             >
               <PlusCircleIcon className="w-5 h-5 mr-1" />
               Create
@@ -181,7 +182,10 @@ function AllPurchases() {
                   "Payment Status",
                   "Action",
                 ].map((header, i) => (
-                  <th key={i} className="border-b py-3 px-4 text-left text-sm font-semibold">
+                  <th
+                    key={i}
+                    className="border-b py-3 px-4 text-left text-sm font-semibold"
+                  >
                     {header}
                   </th>
                 ))}
@@ -189,7 +193,10 @@ function AllPurchases() {
             </thead>
             <tbody>
               {filteredData
-                .slice((currentPage - 1) * dataPerPage, currentPage * dataPerPage)
+                .slice(
+                  (currentPage - 1) * dataPerPage,
+                  currentPage * dataPerPage
+                )
                 .map((purchase, index) => (
                   <tr key={index}>
                     <td className="py-3 px-4 text-sm">{purchase.date}</td>
@@ -198,10 +205,11 @@ function AllPurchases() {
                     <td className="py-3 px-4 text-sm">{purchase.Warehouse}</td>
                     <td className="py-3 px-4 text-sm">
                       <span
-                        className={`px-2 py-1 text-xs rounded-md ${purchase.status === "Completed"
+                        className={`px-2 py-1 text-xs rounded-md ${
+                          purchase.status === "Completed"
                             ? "text-green-500 border border-green-500"
                             : "text-red-500 border border-red-500"
-                          }`}
+                        }`}
                       >
                         {purchase.status}
                       </span>
@@ -211,32 +219,33 @@ function AllPurchases() {
                     <td className="py-3 px-4 text-sm">{purchase.due}</td>
                     <td className="py-3 px-4 text-sm">
                       <span
-                        className={`px-2 py-1 text-xs rounded-md ${purchase.paymentStatus === "Unpaid"
-                          ? "text-orange-500 border border-orange-500"
-                          : "text-green-500 border border-green-500"
-                          }`}
+                        className={`px-2 py-1 text-xs rounded-md ${
+                          purchase.paymentStatus === "Unpaid"
+                            ? "text-orange-500 border border-orange-500"
+                            : "text-green-500 border border-green-500"
+                        }`}
                       >
                         {purchase.paymentStatus}
                       </span>
                     </td>
                     <td className="py-3 px-4 text-sm flex space-x-2">
                       <button
-                        className="p-2 bg-[#4880FF] text-white rounded-lg hover:bg-[#4880FF] focus:outline-none"
+                        className="btn btn-sm btn-info"
                         onClick={navigateToPurchaseDetail}
                       >
-                        <EyeIcon className="w-5 h-5 text-white" />
+                      <EyeIcon className="w-5 h-5" />
                       </button>
                       <button
                         onClick={navigateToPurchaseEdit}
-                        className="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                        className="btn btn-sm btn-warning"
                       >
-                        <PencilIcon className="w-5 h-5" />
+                      <PencilSquareIcon className="w-5 h-5" />
                       </button>
                       <button
                         onClick={() => handleDeleteClick(index)}
-                        className="p-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                        className="btn btn-sm btn-error"
                       >
-                        <TrashIcon className="w-5 h-5" />
+                      <TrashIcon className="w-5 h-5" />
                       </button>
                     </td>
                   </tr>
@@ -266,7 +275,9 @@ function AllPurchases() {
             <ChevronRightIcon
               className="w-5 h-5 cursor-pointer hover:text-purple-600"
               onClick={() =>
-                handlePageChange(Math.min(currentPage + 1, Math.ceil(totalData / dataPerPage)))
+                handlePageChange(
+                  Math.min(currentPage + 1, Math.ceil(totalData / dataPerPage))
+                )
               }
             />
           </div>
