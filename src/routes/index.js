@@ -1,18 +1,19 @@
 // All components mapping with path for internal routes
 
 import { lazy } from "react";
-import CreateProduct from "../features/product/createProduct";
-import AllProducts from "../features/product/allProduct";
-import CountStock from "../features/product/countStock";
-import CategoryPage from "../features/product/category";
-import PrintLabels from "../features/product/printLabels";
-import UnitPage from "../features/product/unit";
-import BrandPage from "../features/product/brand";
+import CreateProduct from "../pages/protected/CreateProduct";
+import AllProducts from "../pages/protected/AllProduct";
+import CountStock from "../pages/protected/CountStock";
+import CategoryPage from "../pages/protected/Category";
+import PrintLabels from "../pages/protected/PrintLabel";
+import UnitPage from "../pages/protected/Unit";
+import BrandPage from "../pages/protected/Brand";
 import DetailProduct from "../features/product/allProduct/detailProduct";
 import EditProduct from "../features/product/allProduct/editProduct";
-import Warehouse from "../features/warehouse/warehouse";
-import CreateTransfer from "../features/warehouse/createTransfer";
-import AllTransfer from "../features/warehouse/allTransfer";
+
+import Warehouse from "../pages/protected/Warehouse";
+import CreateTransfer from "../pages/protected/CreateTransfer";
+import AllTransfer from "../pages/protected/AllTransfer";
 import DetailTransfer from "../features/warehouse/detailTransfer";
 import EditTransfer from "../features/warehouse/editTransfer";
 
@@ -48,13 +49,14 @@ const ProfileSettings = lazy(() =>
 const GettingStarted = lazy(() => import("../pages/GettingStarted"));
 const DocFeatures = lazy(() => import("../pages/DocFeatures"));
 const DocComponents = lazy(() => import("../pages/DocComponents"));
-const Customer = lazy(() => import('../features/people/customer'));
-const Supplier = lazy(() => import('../features/people/supplier'));
-const User = lazy(() => import('../features/people/user'));
-const AllSales = lazy(() => import('../features/sales/allsales'))
-const CreateSales = lazy(() => import('../features/sales/createsales'))
-const POS = lazy(() => import('../features/sales/pos'))
-const ReturnSales = lazy(() => import('../features/sales/returnsales'))
+
+const Customer = lazy(() => import('../pages/protected/Customer'));
+const Supplier = lazy(() => import('../pages/protected/Supplier'));
+const User = lazy(() => import('../pages/protected/User'));
+const AllSales = lazy(() => import('../pages/protected/AllSales'))
+const CreateSales = lazy(() => import('../pages/protected/CreateSales'))
+const POS = lazy(() => import('../pages/protected/POS'))
+const ReturnSales = lazy(() => import('../pages/protected/ReturnSales'))
 const SalesDetail = lazy(() => import('../features/sales/allsales/SalesDetail'))
 const ReturnDetail = lazy(() => import('../features/sales/returnsales/ReturnDetail'))
 

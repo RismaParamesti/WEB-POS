@@ -101,23 +101,29 @@ function CreateProduct() {
           />
 
           {/* Barcode Scanner */}
-          <div className="flex items-center space-x-2">
-            <div className="flex-grow">
-              <InputText
-                labelTitle="Barcode"
-                updateType="barcode"
-                defaultValue={form.barcode}
+          <div className="flex flex-col">
+            <label htmlFor="barcode" className="label">
+              Barcode
+            </label>
+            <div className="flex items-center gap-x-2">
+              <input
+                type="text"
+                id="barcode"
                 placeholder="Scan or Enter Barcode"
-                updateFormValue={updateFormValue}
+                value={form.barcode}
+                onChange={(e) =>
+                  updateFormValue({ updateType: "barcode", value: e.target.value })
+                }
+                className="input input-bordered w-full h-12" // Pastikan tinggi input sama
               />
+              <button
+                type="button"
+                onClick={toggleScanner}
+                className="btn btn-primary h-12 px-4" // Sesuaikan tinggi dan padding tombol
+              >
+                Scan
+              </button>
             </div>
-            <button
-              type="button"
-              onClick={toggleScanner}
-              className="btn btn-primary px-4 py-2"
-            >
-              Scan
-            </button>
           </div>
 
           {/* Scanner Camera */}

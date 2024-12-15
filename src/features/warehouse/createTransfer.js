@@ -7,7 +7,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import { showNotification } from "../common/headerSlice";
 import { useDispatch } from "react-redux";
 import BarcodeScannerComponent from "react-qr-barcode-scanner";
-import Barcode from "react-barcode"; // Impor Barcode
 import { QrCodeIcon } from "@heroicons/react/24/outline";
 
 const CreateTransfer = () => {
@@ -17,6 +16,7 @@ const CreateTransfer = () => {
     date: "",
     fromWarehouse: "",
     toWarehouse: "",
+    orderItems: [],  // Tambahkan orderItems di sini
     orderTax: 0,
     discount: 0,
     shipping: 0,
@@ -24,25 +24,12 @@ const CreateTransfer = () => {
     note: "",
   });
 
-  const [scanning, setScanning] = useState(false);
-  const [productCode, setProductCode] = useState("");
-
-  const toggleScanner = () => {
-    setScanning(!scanning);
-  };
-
-  const handleBarcodeScan = (data) => {
-    if (data) {
-      setProductCode(data.text);
-      setScanning(false);
-    }
-  };
-
-  const updateFormValue = ({ updateType, value }) => {
-    setForm((prevForm) => ({
-      ...prevForm,
-      [updateType]: value,
-    }));
+  const calculateTotal = () => {
+    const totalSubtotal = form.orderItems.reduce(
+      (total, item) => total + item.subtotal,
+      0
+    );
+    return totalSubtotal + form.orderTax - form.discount + form.shipping;
   };
 
   const handleSubmit = () => {
@@ -129,6 +116,33 @@ const CreateTransfer = () => {
       );
     }
   };
+
+  const [scanning, setScanning] = useState(false);
+  const [productCode, setProductCode] = useState("");
+
+  const toggleScanner = () => {
+    setScanning(!scanning);
+  };
+
+  const handleBarcodeScan = (data) => {
+    if (data) {
+      setProductCode(data.text);
+      setScanning(false);
+    }
+  };
+
+  const updateFormValue = ({ updateType, value }) => {
+    setForm((prevForm) => ({
+      ...prevForm,
+      [updateType]: value,
+    }));
+  };
+
+  const totalSubtotal = form.orderItems.reduce(
+    (total, item) => total + item.subtotal,
+    0
+  );
+  const total = calculateTotal(); // Menghitung total berdasarkan orderItems, orderTax, discount, dan shipping
 
   return (
     <>
@@ -247,6 +261,48 @@ const CreateTransfer = () => {
                 </tr>
               </tbody>
             </table>
+          </div>
+
+          {/* Total Summary */}
+          <div className="flex justify-end mb-6">
+            <div className="text-sm text-right w-72">
+              <div className="bg-[#D9D9D9] border-t border-b border-black p-2 flex justify-between">
+                <span className="text-sm text-neutral font-medium">
+                  Subtotal:
+                </span>
+                <span className="text-sm text-neutral font-medium">
+                  ${totalSubtotal.toFixed(2)}
+                </span>
+              </div>
+              <div className="bg-base-100 border-t border-b border-black p-2 flex justify-between">
+                <span className="text-sm  font-medium">Order Tax:</span>
+                <span className="text-sm font-medium">
+                  ${form.orderTax.toFixed(2)}
+                </span>
+              </div>
+              <div className="bg-[#D9D9D9] border-t border-b border-black p-2 flex justify-between">
+                <span className="text-sm text-neutral font-medium">
+                  Discount:
+                </span>
+                <span className="text-sm text-neutral font-medium">
+                  ${form.discount.toFixed(2)}
+                </span>
+              </div>
+              <div className="bg-base-100 border-t border-b border-black p-2 flex justify-between">
+                <span className="text-sm font-medium">Shipping:</span>
+                <span className="text-sm font-medium">
+                  ${form.shipping.toFixed(2)}
+                </span>
+              </div>
+              <div className="bg-[#D9D9D9] border-t border-b border-black p-2 flex justify-between">
+                <span className="text-sm text-neutral font-bold">
+                  Grand Total:
+                </span>
+                <span className="text-sm text-neutral font-bold">
+                  ${total.toFixed(2)}
+                </span>
+              </div>
+            </div>
           </div>
 
           {/* Order Tax, Discount, and Shipping */}

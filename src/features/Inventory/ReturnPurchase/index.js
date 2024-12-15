@@ -7,13 +7,13 @@ import {
   TrashIcon,
   PlusCircleIcon,
   MagnifyingGlassIcon,
-  PencilIcon,
+  PencilSquareIcon,
 } from "@heroicons/react/24/outline";
 import TitleCard from "../../../components/Cards/TitleCard";
 import FilterReturnPurchases from "./Filter";
 import ReturnPurchasesDetail from "./ActionReturnPurchase/ReturnPurchaseDetail";
 import EditReturnPurchase from "./ActionReturnPurchase/ReturnPurchaseEdit";
-import CreatePurchase from "../CreatePurchase"
+import CreatePurchase from "../CreatePurchase";
 import PageControl from "../../../components/PageControl/PageControl";
 
 const RETURN_PURCHASES_DATA = [
@@ -45,7 +45,9 @@ const RETURN_PURCHASES_DATA = [
 ];
 
 function ReturnPurchase() {
-  const [returnPurchasesData, setReturnPurchasesData] = useState(RETURN_PURCHASES_DATA);
+  const [returnPurchasesData, setReturnPurchasesData] = useState(
+    RETURN_PURCHASES_DATA
+  );
   const [searchTerm, setSearchTerm] = useState("");
   const [isFilterVisible, setIsFilterVisible] = useState(false);
   const [isEditReturnPurchase, setIsEditReturnPurchase] = useState(false);
@@ -67,7 +69,9 @@ function ReturnPurchase() {
 
   // Fungsi untuk menghapus data berdasarkan index
   const handleDelete = (index) => {
-    const updatedReturnPurchasesData = returnPurchasesData.filter((_, i) => i !== index);
+    const updatedReturnPurchasesData = returnPurchasesData.filter(
+      (_, i) => i !== index
+    );
     setReturnPurchasesData(updatedReturnPurchasesData);
   };
 
@@ -134,12 +138,12 @@ function ReturnPurchase() {
               PDF
             </button>
             <button
-            className="btn bg-purple-500 flex items-center"
+              className="btn btn-primary flex items-center"
               onClick={() => navigateToCreatePurchase()}
-          >
-            <PlusCircleIcon className="w-5 h-5 mr-1" />
-            Create
-          </button>
+            >
+              <PlusCircleIcon className="w-5 h-5 mr-1" />
+              Create
+            </button>
           </div>
         </div>
 
@@ -148,7 +152,19 @@ function ReturnPurchase() {
           <table className="min-w-full table-auto border-collapse">
             <thead>
               <tr>
-                {["Date", "Reference", "Supplier", "Warehouse", "Purchase Ref", "Status", "Grand Total", "Paid", "Due", "Payment Status", "Action"].map((header, i) => (
+                {[
+                  "Date",
+                  "Reference",
+                  "Supplier",
+                  "Warehouse",
+                  "Purchase Ref",
+                  "Status",
+                  "Grand Total",
+                  "Paid",
+                  "Due",
+                  "Payment Status",
+                  "Action",
+                ].map((header, i) => (
                   <th
                     key={i}
                     className="border-b py-3 px-4 text-left text-sm font-semibold"
@@ -193,22 +209,22 @@ function ReturnPurchase() {
                   </td>
                   <td className="py-3 px-4 text-sm flex space-x-2">
                     <button
-                      className="p-2 bg-[#4880FF] text-white rounded-lg hover:bg-[#4880FF] focus:outline-none"
+                      className="btn btn-sm btn-info"
                       onClick={() => navigateToReturnPurchases()}
                     >
-                      <EyeIcon className="w-5 h-5 text-white" />
+                      <EyeIcon className="w-5 h-5" />
                     </button>
                     <button
                       onClick={() => navigateToEditReturnPurchase()}
-                      className="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none"
+                      className="btn btn-sm btn-warning"
                     >
-                      <PencilIcon className="w-5 h-5 text-white" />
+                      <PencilSquareIcon className="w-5 h-5" />
                     </button>
                     <button
                       onClick={() => handleDelete(index)}
-                      className="p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none"
+                      className="btn btn-sm btn-error"
                     >
-                      <TrashIcon className="w-5 h-5 text-white" />
+                      <TrashIcon className="w-5 h-5" />
                     </button>
                   </td>
                 </tr>
