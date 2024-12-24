@@ -1,404 +1,98 @@
-import React, { useState } from "react";
-import PageControl from "../../../../components/PageControl/PageControl";
-import Search from "./component/Search";
-import PDF from "./component/PDF";
-import Excel from "./component/Excel";
+import React, { useState, useMemo } from "react";
+import SalesTable from "./component/Sales";
+import QuotationsTable from "./component/Quotations";
+import PurchasesTable from "./component/Purchases";
+import SalesReturnTable from "./component/SalesReturn";
+import PurchasesReturn from "./component/PurchasesReturn";
+import Transfer from "./component/Transfer";
+import Adjustment from "./component/Adjustment";
+import PageControl from "./component/PageControl";
 
 const ReportPageStock = () => {
   const [activeTab, setActiveTab] = useState("Sales");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [searchTerm] = useState("");
 
-  // Data untuk tabel warehouse
+  const tableData = useMemo(() => ({
+    sales: [
+      { date: "2024-12-10", reference: "S001", customer: "Rachma", warehouse: "Warehouse 1", product: "Strawberry", qty: "2 kg", subtotal: 100000 },
+    ],
+    quotations: [
+      { date: "2024-12-10", reference: "S001", customer: "Rachma", warehouse: "Warehouse 1", product: "Strawberry", qty: "2 kg", subtotal: 100000 },
+    ],
+    purchases: [
+      { date: "2024-12-10", reference: "S001", supplier: "Rachma", warehouse: "Warehouse 1", product: "Strawberry", qty: "2 kg", subtotal: 100000 },
+    ],
+    salesReturn: [
+      { date: "2024-12-10", reference: "S001", customer: "Rachma", warehouse: "Warehouse 1", product: "Strawberry", qty: "2 kg", subtotal: 100000 },
+    ],
+    purchasesReturn: [
+      { date: "2024-12-10", reference: "S001", supplier: "Rachma", warehouse: "Warehouse 1", product: "Strawberry", qty: "2 kg", subtotal: 100000 },
+    ],
+    transfer: [
+      { date: "2024-12-10", reference: "S001", product: "Strawberry", fromwarehouse: "Warehouse 3", towarehouse: "Warehouse 2" },
+    ],
+    adjustment: [
+      { date: "2024-12-10", reference: "S001", product: "Strawberry", warehouse: "Warehouse 3" },
+    ],
+  }), []);
+
+  const tabKeyMap = {
+    "Sales": "sales",
+    "Quotations": "quotations",
+    "Purchases": "purchases",
+    "Sales Return": "salesReturn",
+    "Purchases Return": "purchasesReturn",
+    "Transfer": "transfer",
+    "Adjustment": "adjustment",
+  };
+
+  const filteredData = tableData[tabKeyMap[activeTab]]?.filter((row) => {
+    return Object.values(row)
+      .join(" ")
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+  }) || []; // Jika undefined, default ke array kosong
+
+  const getCurrentData = (data) => {
+    const startIndex = (currentPage - 1) * rowsPerPage;
+    const endIndex = startIndex + rowsPerPage;
+    return data.slice(startIndex, endIndex);
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const handleRowsPerPageChange = (event) => {
+    const newRowsPerPage = parseInt(event.target.value, 10);
+    setRowsPerPage(newRowsPerPage);
+    setCurrentPage(1); // Reset ke halaman pertama
+  };
+
   const warehouseData = [
     { name: "Warehouse 1", quantity: "51.00 pc" },
     { name: "Warehouse 2", quantity: "51.00 pc" },
+    { name: "Warehouse 2", quantity: "51.00 pc" },
   ];
 
-  // Data untuk setiap tab
-  const tabs = [
-    { id: "Sales", label: "Sales" },
-    { id: "Quotations", label: "Quotations" },
-    { id: "Purchases", label: "Purchases" },
-    { id: "SalesReturn", label: "Sales Return" },
-    { id: "PurchasesReturn", label: "Purchases Return" },
-    { id: "Transfer", label: "Transfer" },
-    { id: "Adjustment", label: "Adjustment" },
-  ];
-
-  // Konten untuk setiap tab
   const renderContent = () => {
     switch (activeTab) {
       case "Sales":
-        return (
-          <div>
-            {/* Toolbar */}
-            <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-4 mb-6">
-              <Search />
-              <div className="flex sm:flex-row flex-col gap-2 sm:gap-4 w-full sm:w-auto items-center sm:justify-end">
-                <Excel />
-                <PDF />
-              </div>
-            </div>
-
-            {/* Tabel */}
-            <div className="overflow-x-auto mt-6">
-              <table className="min-w-full table-auto border-collapse">
-                <thead className="bg-base-100">
-                  <tr>
-                    {[
-                      "Date",
-                      "Reference",
-                      "Customer",
-                      "Warehouse",
-                      "Product",
-                      "Quantity",
-                      "Subtotal",
-                    ].map((header, i) => (
-                      <th
-                        key={i}
-                        className="border-b py-3 px-4 text-left text-sm font-semibold bg-base-100"
-                      >
-                        {header}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {/* Replace with dynamic data */}
-                  <tr className="hover:bg-gray-50">
-                    <td className="py-3 px-4 text-sm bg-base-100">2024-11-06</td>
-                    <td className="py-3 px-4 text-sm bg-base-100">SL_1117</td>
-                    <td className="py-3 px-4 text-sm bg-base-100">
-                      Petter D Kenzo
-                    </td>
-                    <td className="py-3 px-4 text-sm bg-base-100">
-                      Warehouse 1
-                    </td>
-                    <td className="py-3 px-4 text-sm bg-base-100">Strawberry</td>
-                    <td className="py-3 px-4 text-sm bg-base-100">28 pc</td>
-                    <td className="py-3 px-4 text-sm bg-base-100">$700</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <PageControl />
-          </div>
-        );
+        return <SalesTable data={getCurrentData(filteredData)} />;
       case "Quotations":
-        return (
-          <div>
-            {/* Toolbar */}
-            <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-4 mb-6">
-              <Search />
-              <div className="flex sm:flex-row flex-col gap-2 sm:gap-4 w-full sm:w-auto items-center sm:justify-end">
-                <Excel />
-                <PDF />
-              </div>
-            </div>
-
-            {/* Tabel */}
-            <div className="overflow-x-auto mt-6">
-              <table className="min-w-full table-auto border-collapse">
-                <thead className="bg-base-100">
-                  <tr>
-                    {[
-                      "Date",
-                      "Reference",
-                      "Customer",
-                      "Warehouse",
-                      "Product",
-                      "Quantity",
-                      "Subtotal",
-                    ].map((header, i) => (
-                      <th
-                        key={i}
-                        className="border-b py-3 px-4 text-left text-sm font-semibold bg-base-100"
-                      >
-                        {header}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {/* Replace with dynamic data */}
-                  <tr className="hover:bg-gray-50">
-                    <td className="py-3 px-4 text-sm bg-base-100">2024-11-06</td>
-                    <td className="py-3 px-4 text-sm bg-base-100">SL_1117</td>
-                    <td className="py-3 px-4 text-sm bg-base-100">
-                      Petter D Kenzo
-                    </td>
-                    <td className="py-3 px-4 text-sm bg-base-100">
-                      Warehouse 1
-                    </td>
-                    <td className="py-3 px-4 text-sm bg-base-100">Strawberry</td>
-                    <td className="py-3 px-4 text-sm bg-base-100">28 pc</td>
-                    <td className="py-3 px-4 text-sm bg-base-100">$700</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <PageControl />
-          </div>
-        );
+        return <QuotationsTable data={getCurrentData(filteredData)} />;
       case "Purchases":
-        return (
-          <div>
-            {/* Toolbar */}
-            <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-4 mb-6">
-              <Search />
-              <div className="flex sm:flex-row flex-col gap-2 sm:gap-4 w-full sm:w-auto items-center sm:justify-end">
-                <Excel />
-                <PDF />
-              </div>
-            </div>
-
-            {/* Tabel */}
-            <div className="overflow-x-auto mt-6">
-              <table className="min-w-full table-auto border-collapse">
-                <thead className="bg-base-100">
-                  <tr>
-                    {[
-                      "Date",
-                      "Reference",
-                      "Supplier",
-                      "Warehouse",
-                      "Product",
-                      "Quantity",
-                      "Subtotal",
-                    ].map((header, i) => (
-                      <th
-                        key={i}
-                        className="border-b py-3 px-4 text-left text-sm font-semibold bg-base-100"
-                      >
-                        {header}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {/* Replace with dynamic data */}
-                  <tr className="hover:bg-gray-50">
-                    <td className="py-3 px-4 text-sm bg-base-100">2024-11-06</td>
-                    <td className="py-3 px-4 text-sm bg-base-100">SL_1117</td>
-                    <td className="py-3 px-4 text-sm bg-base-100">
-                      Fruits Supply
-                    </td>
-                    <td className="py-3 px-4 text-sm bg-base-100">
-                      Warehouse 1
-                    </td>
-                    <td className="py-3 px-4 text-sm bg-base-100">Strawberry</td>
-                    <td className="py-3 px-4 text-sm bg-base-100">28 pc</td>
-                    <td className="py-3 px-4 text-sm bg-base-100">$700</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <PageControl />
-          </div>
-        );
-      case "SalesReturn":
-        return (
-          <div>
-            {/* Toolbar */}
-            <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-4 mb-6">
-              <Search />
-              <div className="flex sm:flex-row flex-col gap-2 sm:gap-4 w-full sm:w-auto items-center sm:justify-end">
-                <Excel />
-                <PDF />
-              </div>
-            </div>
-
-            {/* Tabel */}
-            <div className="overflow-x-auto mt-6">
-              <table className="min-w-full table-auto border-collapse">
-                <thead className="bg-base-100">
-                  <tr>
-                    {[
-                      "Date",
-                      "Reference",
-                      "Customer",
-                      "Warehouse",
-                      "Product",
-                      "Quantity",
-                      "Subtotal",
-                    ].map((header, i) => (
-                      <th
-                        key={i}
-                        className="border-b py-3 px-4 text-left text-sm font-semibold bg-base-100"
-                      >
-                        {header}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {/* Replace with dynamic data */}
-                  <tr className="hover:bg-gray-50">
-                    <td className="py-3 px-4 text-sm bg-base-100">2024-11-06</td>
-                    <td className="py-3 px-4 text-sm bg-base-100">SL_1117</td>
-                    <td className="py-3 px-4 text-sm bg-base-100">
-                      Petter D Kenzo
-                    </td>
-                    <td className="py-3 px-4 text-sm bg-base-100">
-                      Warehouse 1
-                    </td>
-                    <td className="py-3 px-4 text-sm bg-base-100">Strawberry</td>
-                    <td className="py-3 px-4 text-sm bg-base-100">28 pc</td>
-                    <td className="py-3 px-4 text-sm bg-base-100">$700</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <PageControl />
-          </div>
-        );
-      case "PurchasesReturn":
-        return (
-          <div>
-            {/* Toolbar */}
-            <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-4 mb-6">
-              <Search />
-              <div className="flex sm:flex-row flex-col gap-2 sm:gap-4 w-full sm:w-auto items-center sm:justify-end">
-                <Excel />
-                <PDF />
-              </div>
-            </div>
-
-            {/* Tabel */}
-            <div className="overflow-x-auto mt-6">
-              <table className="min-w-full table-auto border-collapse">
-                <thead className="bg-base-100">
-                  <tr>
-                    {[
-                      "Date",
-                      "Reference",
-                      "Supplier",
-                      "Warehouse",
-                      "Product",
-                      "Quantity",
-                      "Subtotal",
-                    ].map((header, i) => (
-                      <th
-                        key={i}
-                        className="border-b py-3 px-4 text-left text-sm font-semibold bg-base-100"
-                      >
-                        {header}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {/* Replace with dynamic data */}
-                  <tr className="hover:bg-gray-50">
-                    <td className="py-3 px-4 text-sm bg-base-100">2024-11-06</td>
-                    <td className="py-3 px-4 text-sm bg-base-100">SL_1117</td>
-                    <td className="py-3 px-4 text-sm bg-base-100">
-                      Fruits Supply
-                    </td>
-                    <td className="py-3 px-4 text-sm bg-base-100">
-                      Warehouse 1
-                    </td>
-                    <td className="py-3 px-4 text-sm bg-base-100">Strawberry</td>
-                    <td className="py-3 px-4 text-sm bg-base-100">28 pc</td>
-                    <td className="py-3 px-4 text-sm bg-base-100">$700</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <PageControl />
-          </div>
-        );
+        return <PurchasesTable data={getCurrentData(filteredData)} />;
+      case "Sales Return":
+        return <SalesReturnTable data={getCurrentData(filteredData)} />;
+      case "Purchases Return":
+        return <PurchasesReturn data={getCurrentData(filteredData)} />;
       case "Transfer":
-        return (
-          <div>
-            {/* Toolbar */}
-            <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-4 mb-6">
-              <Search />
-              <div className="flex sm:flex-row flex-col gap-2 sm:gap-4 w-full sm:w-auto items-center sm:justify-end">
-                <PDF />
-              </div>
-            </div>
-
-            {/* Tabel */}
-            <div className="overflow-x-auto mt-6">
-              <table className="min-w-full table-auto border-collapse">
-                <thead className="bg-base-100">
-                  <tr>
-                    {[
-                      "Date",
-                      "Reference",
-                      "Product",
-                      "From Warehouse",
-                      "To Warehouse",
-                    ].map((header, i) => (
-                      <th
-                        key={i}
-                        className="border-b py-3 px-4 text-left text-sm font-semibold bg-base-100"
-                      >
-                        {header}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {/* Replace with dynamic data */}
-                  <tr className="hover:bg-gray-50">
-                    <td className="py-3 px-4 text-sm bg-base-100">2024-11-06</td>
-                    <td className="py-3 px-4 text-sm bg-base-100">SL_1117</td>
-                    <td className="py-3 px-4 text-sm bg-base-100">Strawberry</td>
-                    <td className="py-3 px-4 text-sm bg-base-100">Warehouse 2</td>
-                    <td className="py-3 px-4 text-sm bg-base-100">Warehouse 1</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <PageControl />
-          </div>
-        );
+        return <Transfer data={getCurrentData(filteredData)} />;
       case "Adjustment":
-        return (
-          <div>
-            {/* Toolbar */}
-            <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-4 mb-6">
-              <Search />
-              <div className="flex sm:flex-row flex-col gap-2 sm:gap-4 w-full sm:w-auto items-center sm:justify-end">
-                <PDF />
-              </div>
-            </div>
-
-            {/* Tabel */}
-            <div className="overflow-x-auto mt-6">
-              <table className="min-w-full table-auto border-collapse">
-                <thead className="bg-base-100">
-                  <tr>
-                    {[
-                      "Date",
-                      "Reference",
-                      "Product",
-                      "Warehouse",
-                    ].map((header, i) => (
-                      <th
-                        key={i}
-                        className="border-b py-3 px-4 text-left text-sm font-semibold bg-base-100"
-                      >
-                        {header}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {/* Replace with dynamic data */}
-                  <tr className="hover:bg-gray-50">
-                    <td className="py-3 px-4 text-sm bg-base-100">2024-11-06</td>
-                    <td className="py-3 px-4 text-sm bg-base-100">SL_1117</td>
-                    <td className="py-3 px-4 text-sm bg-base-100">Strawberry</td>
-                    <td className="py-3 px-4 text-sm bg-base-100">Warehouse 2</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <PageControl />
-          </div>
-        );
+        return <Adjustment data={getCurrentData(filteredData)} />;
       default:
         return null;
     }
@@ -446,24 +140,30 @@ const ReportPageStock = () => {
 
       {/* Tabs */}
       <div className="w-full max-w-6xl p-6 sm:p-10 bg-base-100 rounded-lg shadow-md">
-        <div className="flex flex-wrap gap-2 sm:gap-1 mb-4 border-b-2 border-gray-300">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`p-2 px-4 rounded-t-lg ${
-                activeTab === tab.id
-                  ? "bg-white border-x border-t border-gray-300 -mb-[2px] text-purple-500 font-semibold"
-                  : "bg-gray-100 text-gray-500 border-transparent"
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
+        <div className="flex justify-between mb-4 border-b-2 border-gray-300">
+          <div className="flex flex-wrap gap-2 sm:gap-1">
+            {["Sales", "Quotations", "Purchases", "Sales Return", "Purchases Return", "Transfer", "Adjustment"].map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`p-2 px-4 rounded-t-lg ${activeTab === tab
+                  ? "bg-white text-purple-500 font-semibold"
+                  : "bg-gray-100 text-gray-500"
+                  }`}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
         </div>
-
-        {/* Konten Tab */}
         <div>{renderContent()}</div>
+        <PageControl
+          totalItems={filteredData.length}
+          rowsPerPage={rowsPerPage}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+          onRowsPerPageChange={handleRowsPerPageChange}
+        />
       </div>
     </div>
   );

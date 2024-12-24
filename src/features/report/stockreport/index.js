@@ -1,83 +1,113 @@
 import { useState } from "react";
 import TitleCard from "../../../components/Cards/TitleCard";
 import PageControl from "../../../components/PageControl/PageControl";
-import SearchBar from "../../../components/Input/SearchBar";
+import * as XLSX from "xlsx";
+import { jsPDF } from "jspdf";
 import {
   DocumentTextIcon,
   DocumentArrowDownIcon,
 } from "@heroicons/react/24/outline";
 import ReportPageStock from "./reportstock/index"; 
 
-const STOCK = [
-  {
-    code: "87654321",
-    name: "Strawberry",
-    Category: "Shoes",
-    CurrentStock: "102 pc",
-  },
-];
-
 function StockReport() {
-  const [stock] = useState(STOCK);
+  const [data] = useState([
+    {
+      code: "87654321",
+      name: "Strawberry",
+      Category: "buah",
+      CurrentStock: "102 kg",
+    },
+    {
+      code: "87654321",
+      name: "adidas",
+      Category: "sepatu",
+      CurrentStock: "102 pc",
+    },
+  ],);
 
-  const handlePrint = (type) => {
-    console.log(`Exporting ${type} PDF`);
-    window.print(); // Placeholder for exporting PDF
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [searchText, setSearchText] = useState("");
+  // Fungsi untuk memfilter data berdasarkan pencarian
+  const filteredData = data.filter((row) =>
+    Object.values(row).some((value) =>
+      value?.toString().toLowerCase().includes(searchText.toLowerCase())
+    )
+  );
+
+  const currentData = filteredData.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage
+  );
+
+  const handlePageChange = (page) => setCurrentPage(page);
+  const handleRowsPerPageChange = (e) => {
+    setRowsPerPage(parseInt(e.target.value, 10));
+    setCurrentPage(1);
   };
 
-  const [selectedWarehouse, setSelectedWarehouse] = useState("");
-  const handleWarehouseChange = (e) => setSelectedWarehouse(e.target.value);
-  const warehouses = ["Warehouse 1", "Warehouse 2", "Warehouse 3"];
+  const handleExportExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(filteredData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
+    XLSX.writeFile(workbook, "Stock Report.xlsx");
+  };
+
+  const handleExportPDF = () => {
+    const doc = new jsPDF();
+    doc.text("Stock Report", 10, 10);
+    const tableData = filteredData.map((item) => [
+      item.code,
+      item.name,
+      item.Category,
+      item.CurrentStock,
+    ]);
+    doc.autoTable({
+      head: [["Code", "Product", "Category", "Current Stock"]],
+      body: tableData,
+    });
+    doc.save("Stock Report.pdf");
+  };
 
   const [isReportPageStock, setIsReportPageStock] = useState(false); // Menentukan apakah menampilkan halaman ReportPage
   const navigateToReportPageStock = () => setIsReportPageStock(true); // Navigasi ke ReportPage
-
   if (isReportPageStock) {
     return <ReportPageStock />; // Tampilkan ReportPage jika state isReportPage true
   }
+
   return (
     <div className="flex flex-col items-center h-screen pt-10 px-4">
       <TitleCard title="Stock Report" topMargin="mt-2">
-        <div className="flex w-full items-center justify-between flex-wrap">
-          {/* Search Bar */}
-          <div className="flex-grow sm:flex-grow-0 mr-4">
-            <SearchBar className="input input-bordered h-10 w-full sm:w-96" />
-          </div>
-
-          {/* Dropdown Warehouses */}
-          <div className="flex justify-center flex-grow max-w-[200px] mx-4">
-            <select
-              value={selectedWarehouse}
-              onChange={handleWarehouseChange}
-              className="select select-bordered w-full h-10 text-center"
-            >
-              <option value="">Select Warehouse</option>
-              {warehouses.map((warehouse, index) => (
-                <option key={index} value={warehouse}>
-                  {warehouse}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Buttons */}
-          <div className="flex space-x-2 mt-2 sm:mt-0">
-            <button
-              onClick={() => console.log("Exporting Excel")}
-              className="btn btn-outline btn-success flex items-center text-sm h-10"
-            >
-              <DocumentArrowDownIcon className="w-5 h-5 mr-1" />
-              Excel
-            </button>
-            <button
-              onClick={() => handlePrint("PDF")}
-              className="btn btn-outline btn-error flex items-center text-sm h-10"
-            >
-              <DocumentTextIcon className="w-5 h-5 mr-1" />
-              PDF
-            </button>
-          </div>
-        </div>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:space-x-4 w-full">
+  {/* Search Bar */}
+  <div className="relative w-full sm:w-1/4">
+    <input
+      type="text"
+      value={searchText}
+      onChange={(e) => setSearchText(e.target.value)}
+      placeholder="Search"
+      className="input input-bordered w-full h-10"
+    />
+  </div>
+  {/* Buttons */}
+  <div className="w-full sm:w-1/4 mt-4 sm:mt-0 flex sm:justify-end space-x-4">
+    <button
+      className="btn btn-outline btn-success flex items-center"
+      onClick={handleExportExcel}
+    >
+      <DocumentArrowDownIcon className="w-5 h-5 mr-1" />
+      Excel
+    </button>
+    <button
+      className="btn btn-outline btn-error flex items-center"
+      onClick={handleExportPDF}
+    >
+      <DocumentTextIcon className="w-5 h-5 mr-1" />
+      PDF
+    </button>
+  </div>
+</div>
 
         {/* Table */}
         <div className="overflow-x-auto mt-4">
@@ -92,7 +122,7 @@ function StockReport() {
               </tr>
             </thead>
             <tbody>
-              {stock.map((stok, index) => (
+              {currentData.map((stok, index) => (
                 <tr key={index}>
                   <td>{stok.code}</td>
                   <td>{stok.name}</td>
@@ -111,7 +141,13 @@ function StockReport() {
             </tbody>
           </table>
         </div>
-        <PageControl />
+          <PageControl
+            totalItems={filteredData.length}
+            rowsPerPage={rowsPerPage}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+            onRowsPerPageChange={handleRowsPerPageChange}
+          />
       </TitleCard>
     </div>
   );
