@@ -1,103 +1,111 @@
 import { useState } from "react";
 import TitleCard from "../../../components/Cards/TitleCard";
 import PageControl from "../../../components/PageControl/PageControl";
-import SearchBar from "../../../components/Input/SearchBar";
-import {
-  DocumentTextIcon,
-  DocumentArrowDownIcon,
-} from "@heroicons/react/24/outline";
-import Datepicker from "react-tailwindcss-datepicker";
-import ReportPage from "./reportproduct/index"; 
-
-const PRODUCTS = [
-  {
-    code: "123",
-    name: "Avocat",
-    totalSales: "40kg",
-    totalAmount: 480,
-  },
-  {
-    code: "456",
-    name: "Banana",
-    totalSales: "100kg",
-    totalAmount: 600,
-  },
-];
+import * as XLSX from "xlsx";
+import { jsPDF } from "jspdf";
+import { DocumentTextIcon, DocumentArrowDownIcon } from "@heroicons/react/24/outline";
+import ReportPage from "./reportproduct/index";
 
 function ProductReport() {
-  const [dateValue, setDateValue] = useState({
-    startDate: new Date(),
-    endDate: new Date(),
-  });
+  const [data] = useState([
+    {
+      code: "123",
+      name: "Pisang",
+      totalSales: "40kg",
+      totalAmount: 1200000,
+    },
+    {
+      code: "456",
+      name: "Jeruk",
+      totalSales: "100kg",
+      totalAmount: 20000000,
+    },
+  ]);
 
-  const [selectedWarehouse, setSelectedWarehouse] = useState("");
-  const handleWarehouseChange = (e) => setSelectedWarehouse(e.target.value);
-  const warehouses = ["Warehouse 1", "Warehouse 2", "Warehouse 3"];
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [searchText, setSearchText] = useState("");
+  
+  // Fungsi untuk memfilter data berdasarkan pencarian
+  const filteredData = data.filter((item) =>
+    Object.values(item).some((value) =>
+      value?.toString().toLowerCase().includes(searchText.toLowerCase())
+    )
+  );
 
-  const handleDatePickerValueChange = (newValue) => {
-    console.log("newValue:", newValue);
-    setDateValue(newValue);
+  const currentData = filteredData.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage
+  );
+
+  const handlePageChange = (page) => setCurrentPage(page);
+  const handleRowsPerPageChange = (e) => {
+    setRowsPerPage(parseInt(e.target.value, 10));
+    setCurrentPage(1);
   };
 
-  
-  const [isReportPage, setIsReportPage] = useState(false); // Menentukan apakah menampilkan halaman ReportPage
-  const navigateToReportPage = () => setIsReportPage(true); // Navigasi ke ReportPage
+  const handleExportExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(
+      filteredData.map((item) => ({
+        ...item,
+        totalAmount: `Rp${item.totalAmount.toLocaleString("id-ID")}`,
+      }))
+    );
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
+    XLSX.writeFile(workbook, "Product Report.xlsx");
+  };
+
+  const handleExportPDF = () => {
+    const doc = new jsPDF();
+    doc.text("Product Report", 10, 10);
+    const tableData = filteredData.map((item) => [
+      item.code,
+      item.name,
+      item.totalSales,
+      `Rp${item.totalAmount.toLocaleString("id-ID")}`,
+    ]);
+    doc.autoTable({
+      head: [["Code", "Product", "Total Sales", "Total Amount"]],
+      body: tableData,
+    });
+    doc.save("Product Report.pdf");
+  };
+
+  const [isReportPage, setIsReportPage] = useState(false);
+  const navigateToReportPage = () => setIsReportPage(true);
 
   if (isReportPage) {
-    return <ReportPage />; // Tampilkan ReportPage jika state isReportPage true
+    return <ReportPage />;
   }
 
   return (
     <div className="flex flex-col items-center h-screen pt-10 px-4">
-      <div className="flex justify-center w-full mb-1">
-        <Datepicker
-          containerClassName="w-full sm:w-72"
-          value={dateValue}
-          theme="light"
-          inputClassName="input input-bordered w-full sm:w-72 text-center"
-          popoverDirection="down-start"
-          toggleClassName="invisible"
-          onChange={handleDatePickerValueChange}
-          showShortcuts={true}
-          primaryColor="white"
-        />
-      </div>
-
       <TitleCard title="Product Report" topMargin="mt-2">
         <div className="flex w-full items-center justify-between flex-wrap">
           {/* Search Bar */}
           <div className="flex-grow sm:flex-grow-0 mr-4">
-            <SearchBar className="input input-bordered h-10 w-full sm:w-96" />
+            <input
+              type="text"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              placeholder="Search"
+              className="input input-bordered w-full"
+            />
           </div>
 
-          {/* Dropdown Warehouses */}
-          <div className="flex justify-center flex-grow max-w-[200px] mx-4">
-            <select
-              value={selectedWarehouse}
-              onChange={handleWarehouseChange}
-              className="select select-bordered w-full h-10 text-center"
-            >
-              <option value="">Select Warehouse</option>
-              {warehouses.map((warehouse, index) => (
-                <option key={index} value={warehouse}>
-                  {warehouse}
-                </option>
-              ))}
-            </select>
-          </div>
-          
           {/* Buttons */}
           <div className="flex space-x-2 mt-2 sm:mt-0">
             <button
-              onClick={() => console.log("Exporting Excel")}
-              className="btn btn-outline btn-success flex items-center text-sm h-10"
+              className="btn btn-outline btn-success flex items-center"
+              onClick={handleExportExcel}
             >
               <DocumentArrowDownIcon className="w-5 h-5 mr-1" />
               Excel
             </button>
             <button
-              onClick={() => console.log("Exporting PDF")}
-              className="btn btn-outline btn-error flex items-center text-sm h-10"
+              className="btn btn-outline btn-error flex items-center"
+              onClick={handleExportPDF}
             >
               <DocumentTextIcon className="w-5 h-5 mr-1" />
               PDF
@@ -118,12 +126,12 @@ function ProductReport() {
               </tr>
             </thead>
             <tbody>
-              {PRODUCTS.map((product, index) => (
+              {currentData.map((product, index) => (
                 <tr key={index}>
                   <td>{product.code}</td>
                   <td>{product.name}</td>
                   <td>{product.totalSales}</td>
-                  <td>${product.totalAmount}</td>
+                  <td>Rp{product.totalAmount.toLocaleString("id-ID")}</td>
                   <td>
                     <button
                       onClick={navigateToReportPage}
@@ -137,7 +145,13 @@ function ProductReport() {
             </tbody>
           </table>
         </div>
-        <PageControl />
+        <PageControl
+          totalItems={filteredData.length}
+          rowsPerPage={rowsPerPage}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+          onRowsPerPageChange={handleRowsPerPageChange}
+        />
       </TitleCard>
     </div>
   );
