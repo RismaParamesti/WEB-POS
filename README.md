@@ -23,3 +23,6 @@ Jalankan pada directory
 |                          |                               |
 :-------------------------:|:-------------------------:
 ![Login](https://github.com/user-attachments/assets/8487f705-5b02-4e49-942f-3adc14aa2ea8) | ![POS](https://github.com/user-attachments/assets/462b1a92-a9c0-4cd3-9f7a-32e79c293dfd)
+
+### Credits
+Template ini diadaptasi dari [[daisyui-admin-dashboard-template](https://github.com/robbins23/daisyui-admin-dashboard-template.git)] yang dilisensikan di bawah MIT License.
