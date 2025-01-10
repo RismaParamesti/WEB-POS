@@ -11,7 +11,7 @@ Website Point of Sales (POS) adalah sistem berbasis web yang dirancang untuk mem
 
 ## Installation
 
-Go to project directory and run (make sure you have node installed first)
+Jalankan pada directory
 
 ```bash
   npm install
